@@ -30,6 +30,7 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnNewRequest = new System.Windows.Forms.ToolStripMenuItem();
             this.btnImport = new System.Windows.Forms.ToolStripMenuItem();
             this.btnExit = new System.Windows.Forms.ToolStripMenuItem();
             this.treeCollections = new System.Windows.Forms.TreeView();
@@ -52,11 +53,19 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnNewRequest,
             this.btnImport,
             this.btnExit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
+            // 
+            // btnNewRequest
+            // 
+            this.btnNewRequest.Name = "btnNewRequest";
+            this.btnNewRequest.Size = new System.Drawing.Size(119, 22);
+            this.btnNewRequest.Text = "New";
+            this.btnNewRequest.Click += new System.EventHandler(this.BtnNewRequest_Click);
             // 
             // btnImport
             // 
@@ -92,14 +101,14 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabsRequest
+            // tabRequests
             // 
             this.tabRequests.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabRequests.Controls.Add(this.tabPage1);
             this.tabRequests.Location = new System.Drawing.Point(214, 27);
-            this.tabRequests.Name = "tabsRequest";
+            this.tabRequests.Name = "tabRequests";
             this.tabRequests.SelectedIndex = 0;
             this.tabRequests.Size = new System.Drawing.Size(757, 434);
             this.tabRequests.TabIndex = 2;
@@ -114,7 +123,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Main";
-            this.Text = "Form1";
+            this.Text = "Requestr";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabRequests.ResumeLayout(false);
@@ -132,5 +141,6 @@
         private TreeView treeCollections;
         private TabPage tabPage1;
         private TabControl tabRequests;
+        private ToolStripMenuItem btnNewRequest;
     }
 }

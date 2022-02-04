@@ -22,6 +22,53 @@ namespace Requestr
             Application.Exit();
         }
 
+        private void BtnNewRequest_Click(object sender, EventArgs e)
+        {
+            var tabPage = new RequestTab()
+            {
+                Key = Guid.NewGuid(),
+                Text = "Untitled",
+                ContextMenuStrip = new ContextMenuStrip(),
+            };
+
+            var itemClose = new ToolStripMenuItem
+            {
+                Text = "Close",
+            };
+
+            itemClose.Click += (sender, e) =>
+            {
+                tabRequests.TabPages.Remove(tabRequests.SelectedTab);
+            };
+
+            tabPage.ContextMenuStrip.Items.Add(itemClose);
+
+            var requestItem = new RequestItem()
+            {
+                Name = "Untitled",
+                Request = new Request()
+                {
+                    Method = "GET",
+                    Url = new UrlInfo()
+                    {
+                        Raw = "https://example.com",
+                    }
+                }
+            };
+
+            var requestPanel = new RequestPanel
+            {
+                Dock = DockStyle.Fill,
+                RequestItem = requestItem,
+            };
+
+            tabPage.Controls.Add(requestPanel);
+
+            tabRequests.TabPages.Add(tabPage);
+
+            tabRequests.SelectedTab = tabPage;
+        }
+
         private void BtnImport_Click(object sender, EventArgs e)
         {
             using var openFileDialog = new OpenFileDialog();
@@ -113,22 +160,15 @@ namespace Requestr
 
             var requestPanel = new RequestPanel
             {
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
+                RequestItem = node.RequestItem,
             };
 
             tabPage.Controls.Add(requestPanel);
 
             tabRequests.TabPages.Add(tabPage);
 
-            requestPanel.cmboMethod.SelectedItem = node.RequestItem!.Request.Method;
-            requestPanel.txtUrl.Text = node.RequestItem.Request.Url.Raw;
-
             tabRequests.SelectedTab = tabPage;
-        }
-
-        private void ItemClose_Click(object? sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
     }
 

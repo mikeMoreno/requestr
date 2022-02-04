@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Requestr.Forms
+﻿namespace Requestr.Forms
 {
-    public partial class RequestPanel
+    partial class RequestPanel
     {
-        /// <summary>
-        ///  Required designer variable.
+        /// <summary> 
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        ///  Clean up any resources being used.
+        /// <summary> 
+        /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
@@ -26,48 +20,69 @@ namespace Requestr.Forms
             base.Dispose(disposing);
         }
 
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
-            this.cmboMethod = new System.Windows.Forms.ComboBox();
-            this.txtUrl = new System.Windows.Forms.TextBox();
-
+            this.comboMethod = new System.Windows.Forms.ComboBox();
+            this.textUrl = new System.Windows.Forms.TextBox();
+            this.btnSend = new System.Windows.Forms.Button();
+            this.SuspendLayout();
             // 
-            // cmboMethod
+            // comboMethod
             // 
-            this.cmboMethod.FormattingEnabled = true;
-            this.cmboMethod.Items.AddRange(new object[] {
+            this.comboMethod.FormattingEnabled = true;
+            this.comboMethod.Items.AddRange(new object[] {
             "GET",
             "PUT",
             "POST",
             "PATCH",
             "DELETE",
             "HEAD"});
-            this.cmboMethod.Location = new System.Drawing.Point(17, 33);
-            this.cmboMethod.Name = "cmboMethod";
-            this.cmboMethod.Size = new System.Drawing.Size(72, 23);
-            this.cmboMethod.TabIndex = 1;
-
+            this.comboMethod.Location = new System.Drawing.Point(17, 33);
+            this.comboMethod.Name = "comboMethod";
+            this.comboMethod.Size = new System.Drawing.Size(72, 23);
+            this.comboMethod.TabIndex = 1;
             // 
-            // txtUrl
+            // textUrl
             // 
-            this.txtUrl.Location = new System.Drawing.Point(95, 33);
-            this.txtUrl.Name = "txtUrl";
-            this.txtUrl.Size = new System.Drawing.Size(515, 23);
-            this.txtUrl.TabIndex = 0;
-
-            Controls.Add(this.cmboMethod);
-            Controls.Add(this.txtUrl);
-            Dock = System.Windows.Forms.DockStyle.Fill;
-            Location = new System.Drawing.Point(3, 3);
-            Name = "requestPanel1";
-            Size = new System.Drawing.Size(743, 400);
-            TabIndex = 2;
+            this.textUrl.Location = new System.Drawing.Point(95, 33);
+            this.textUrl.Name = "textUrl";
+            this.textUrl.Size = new System.Drawing.Size(515, 23);
+            this.textUrl.TabIndex = 0;
+            // 
+            // btnSend
+            // 
+            this.btnSend.Location = new System.Drawing.Point(616, 32);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(75, 23);
+            this.btnSend.TabIndex = 2;
+            this.btnSend.Text = "Send";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
+            // RequestPanel
+            // 
+            this.Controls.Add(this.btnSend);
+            this.Controls.Add(this.comboMethod);
+            this.Controls.Add(this.textUrl);
+            this.Location = new System.Drawing.Point(3, 3);
+            this.Name = "RequestPanel";
+            this.Size = new System.Drawing.Size(1069, 917);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
-        public ComboBox cmboMethod;
-        public TextBox txtUrl;
+        private ComboBox comboMethod;
+        private TextBox textUrl;
+
+        #endregion
+
+        private Button btnSend;
     }
 }
