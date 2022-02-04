@@ -1,5 +1,6 @@
 using Requestr.Forms;
 using Requestr.PostmanImporter;
+using static System.Windows.Forms.TabControl;
 
 namespace Requestr
 {
@@ -11,7 +12,7 @@ namespace Requestr
         {
             InitializeComponent();
 
-            tabsRequest.TabPages.Clear();
+            tabRequests.TabPages.Clear();
 
             this.requestImporter = requestImporter;
         }
@@ -64,6 +65,7 @@ namespace Requestr
             {
                 var requestNode = new RequestNode()
                 {
+                    Key = requestItem.Key,
                     Text = requestItem.Name,
                     RequestItem = requestItem,
                 };
@@ -81,10 +83,33 @@ namespace Requestr
                 return;
             }
 
-            var tabPage = new TabPage()
+            var (existingTab, index) = tabRequests.FindByKey(node.Key);
+
+            if (existingTab != null)
             {
+                tabRequests.SelectedIndex = index;
+
+                return;
+            }
+
+            var tabPage = new RequestTab()
+            {
+                Key = node.RequestItem!.Key,
                 Text = node.RequestItem!.Name,
+                ContextMenuStrip = new ContextMenuStrip(),
             };
+
+            var itemClose = new ToolStripMenuItem
+            {
+                Text = "Close",
+            };
+
+            itemClose.Click += (sender, e) =>
+            {
+                tabRequests.TabPages.Remove(tabRequests.SelectedTab);
+            };
+
+            tabPage.ContextMenuStrip.Items.Add(itemClose);
 
             var requestPanel = new RequestPanel
             {
@@ -93,10 +118,43 @@ namespace Requestr
 
             tabPage.Controls.Add(requestPanel);
 
-            tabsRequest.TabPages.Add(tabPage);
+            tabRequests.TabPages.Add(tabPage);
 
             requestPanel.cmboMethod.SelectedItem = node.RequestItem!.Request.Method;
             requestPanel.txtUrl.Text = node.RequestItem.Request.Url.Raw;
+
+            tabRequests.SelectedTab = tabPage;
+        }
+
+        private void ItemClose_Click(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    static class TabControlExtensions
+    {
+        public static (RequestTab?, int) FindByKey(this TabControl tabControl, Guid key)
+        {
+            int i = 0;
+
+            foreach (var tabPage in tabControl.TabPages)
+            {
+                i++;
+
+                if (tabPage is not RequestTab tab)
+                {
+
+                    continue;
+                }
+
+                if (tab.Key == key)
+                {
+                    return (tab, i - 1);
+                }
+            }
+
+            return (null, i);
         }
     }
 }

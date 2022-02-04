@@ -34,9 +34,9 @@
             this.btnExit = new System.Windows.Forms.ToolStripMenuItem();
             this.treeCollections = new System.Windows.Forms.TreeView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabsRequest = new System.Windows.Forms.TabControl();
+            this.tabRequests = new System.Windows.Forms.TabControl();
             this.menuStrip1.SuspendLayout();
-            this.tabsRequest.SuspendLayout();
+            this.tabRequests.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -94,22 +94,22 @@
             // 
             // tabsRequest
             // 
-            this.tabsRequest.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tabRequests.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabsRequest.Controls.Add(this.tabPage1);
-            this.tabsRequest.Location = new System.Drawing.Point(214, 27);
-            this.tabsRequest.Name = "tabsRequest";
-            this.tabsRequest.SelectedIndex = 0;
-            this.tabsRequest.Size = new System.Drawing.Size(757, 434);
-            this.tabsRequest.TabIndex = 2;
+            this.tabRequests.Controls.Add(this.tabPage1);
+            this.tabRequests.Location = new System.Drawing.Point(214, 27);
+            this.tabRequests.Name = "tabsRequest";
+            this.tabRequests.SelectedIndex = 0;
+            this.tabRequests.Size = new System.Drawing.Size(757, 434);
+            this.tabRequests.TabIndex = 2;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(971, 461);
-            this.Controls.Add(this.tabsRequest);
+            this.Controls.Add(this.tabRequests);
             this.Controls.Add(this.treeCollections);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -117,7 +117,7 @@
             this.Text = "Form1";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tabsRequest.ResumeLayout(false);
+            this.tabRequests.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -131,6 +131,6 @@
         private ToolStripMenuItem btnExit;
         private TreeView treeCollections;
         private TabPage tabPage1;
-        private TabControl tabsRequest;
+        private TabControl tabRequests;
     }
 }
