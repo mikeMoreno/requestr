@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Requestr.DAL", "Requestr.DA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Requestr.PostmanImporter", "Requestr.Importer\Requestr.PostmanImporter.csproj", "{07745549-72BB-4827-8315-4F12BCE8B777}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Requestr.Forms", "Requestr.Forms\Requestr.Forms.csproj", "{A480B4D2-7D6A-4E83-83D8-F4B7C7696B4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{07745549-72BB-4827-8315-4F12BCE8B777}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07745549-72BB-4827-8315-4F12BCE8B777}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07745549-72BB-4827-8315-4F12BCE8B777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A480B4D2-7D6A-4E83-83D8-F4B7C7696B4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A480B4D2-7D6A-4E83-83D8-F4B7C7696B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A480B4D2-7D6A-4E83-83D8-F4B7C7696B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A480B4D2-7D6A-4E83-83D8-F4B7C7696B4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
