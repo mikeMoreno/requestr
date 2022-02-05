@@ -61,11 +61,16 @@ namespace Requestr.Forms
 
             var cookies = await cookieService.GetCookiesAsync(url);
 
+            if (cookies.Length > 0)
+            {
+                httpClient.DefaultRequestHeaders.Add("Cookie", cookies);
+            }
+
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
 
-            using var response = await SendRequestAsync(method, url, cookies);
+            using var response = await SendRequestAsync(method, url);
 
             stopwatch.Stop();
 
@@ -110,7 +115,7 @@ namespace Requestr.Forms
             }
         }
 
-        private async Task<HttpResponseMessage> SendRequestAsync(string method, string url, string cookies, int requestsMade = 0)
+        private async Task<HttpResponseMessage> SendRequestAsync(string method, string url, int requestsMade = 0)
         {
             if (requestsMade > Globals.MaxRedirects)
             {
@@ -118,11 +123,6 @@ namespace Requestr.Forms
             }
 
             using var request = new HttpRequestMessage(MethodMapper(method), url);
-
-            if (cookies.Length > 0)
-            {
-                request.Headers.Add("Cookie", cookies);
-            }
 
             var response = await httpClient.SendAsync(request);
 
@@ -132,7 +132,7 @@ namespace Requestr.Forms
 
                 httpClient.DefaultRequestHeaders.Add("Referer", url);
 
-                return await SendRequestAsync(method, movedLocation.AbsoluteUri, cookies, requestsMade + 1);
+                return await SendRequestAsync(method, movedLocation.AbsoluteUri, requestsMade + 1);
             }
 
             return response;
