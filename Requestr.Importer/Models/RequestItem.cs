@@ -9,17 +9,10 @@ namespace Requestr.PostmanImporter.Models
 {
     public class RequestItem
     {
-        //public Guid Key { get; }
-
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
         [JsonPropertyName("request")]
         public Request Request { get; set; }
-
-        //public RequestItem()
-        //{
-        //    Key = Guid.NewGuid();
-        //}
     }
 }

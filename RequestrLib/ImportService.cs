@@ -1,8 +1,9 @@
 ﻿using Requestr.DAL;
+using Requestr.DAL.Models;
 using Requestr.Lib.Exceptions;
+using Requestr.Lib.Models;
 using Requestr.PostmanImporter;
 using Requestr.PostmanImporter.Exceptions;
-using Requestr.PostmanImporter.Models;
 
 namespace Requestr.Lib
 {
@@ -17,9 +18,9 @@ namespace Requestr.Lib
             this.postmanImporter = postmanImporter;
         }
 
-        public async Task<Models.Collection> ImportAsync(string fileContents)
+        public async Task<Collection> ImportAsync(string fileContents)
         {
-            Collection postmanCollection;
+            PostmanImporter.Models.Collection postmanCollection;
 
             try
             {
@@ -30,7 +31,31 @@ namespace Requestr.Lib
                 throw new ImportException(e.Message);
             }
 
-            var collection = new Models.Collection()
+            var collection = MapFromPostman(postmanCollection);
+
+            var dalCollection = new RequestCollection()
+            {
+                Id = collection.Id,
+                Name = collection.Name,
+                Requests = collection.Requests.Select(r => new DAL.Models.Request()
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Method = r.Method,
+                    Url = r.Url,
+                }).ToList()
+            };
+
+            await requestrDbContext.RequestCollections.AddAsync(dalCollection);
+
+            await requestrDbContext.SaveChangesAsync();
+
+            return collection;
+        }
+
+        private static Collection MapFromPostman(PostmanImporter.Models.Collection postmanCollection)
+        {
+            var collection = new Collection()
             {
                 Id = Guid.NewGuid(),
                 Name = postmanCollection.Info.Name,
@@ -46,21 +71,6 @@ namespace Requestr.Lib
                     Url = requestItem.Request.Url.Raw,
                 });
             }
-
-            var dalCollection = new DAL.Models.RequestCollection()
-            {
-                Name = collection.Name,
-                Requests = collection.Requests.Select(r => new DAL.Models.Request()
-                {
-                    Name = r.Name,
-                    Method = r.Method,
-                    Url = r.Url,
-                }).ToList()
-            };
-
-            await requestrDbContext.RequestCollections.AddAsync(dalCollection);
-
-            await requestrDbContext.SaveChangesAsync();
 
             return collection;
         }

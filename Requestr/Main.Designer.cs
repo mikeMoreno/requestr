@@ -28,15 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnNewRequest = new System.Windows.Forms.ToolStripMenuItem();
             this.btnImport = new System.Windows.Forms.ToolStripMenuItem();
             this.btnExit = new System.Windows.Forms.ToolStripMenuItem();
             this.treeCollections = new System.Windows.Forms.TreeView();
+            this.treeCollectionsContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.collectionTreeDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabRequests = new System.Windows.Forms.TabControl();
             this.menuStrip1.SuspendLayout();
+            this.treeCollectionsContextMenu.SuspendLayout();
             this.tabRequests.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,11 +89,27 @@
             // 
             this.treeCollections.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.treeCollections.ContextMenuStrip = this.treeCollectionsContextMenu;
             this.treeCollections.Location = new System.Drawing.Point(0, 27);
             this.treeCollections.Name = "treeCollections";
             this.treeCollections.Size = new System.Drawing.Size(217, 434);
             this.treeCollections.TabIndex = 1;
+            this.treeCollections.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeCollections_NodeMouseClick);
             this.treeCollections.DoubleClick += new System.EventHandler(this.TreeCollections_DoubleClick);
+            // 
+            // treeCollectionsContextMenu
+            // 
+            this.treeCollectionsContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.collectionTreeDelete});
+            this.treeCollectionsContextMenu.Name = "treeCollectionsContextMenu";
+            this.treeCollectionsContextMenu.Size = new System.Drawing.Size(181, 48);
+            // 
+            // collectionTreeDelete
+            // 
+            this.collectionTreeDelete.Name = "collectionTreeDelete";
+            this.collectionTreeDelete.Size = new System.Drawing.Size(180, 22);
+            this.collectionTreeDelete.Text = "Delete";
+            this.collectionTreeDelete.Click += new System.EventHandler(this.CollectionTreeDelete_Click);
             // 
             // tabPage1
             // 
@@ -126,6 +146,7 @@
             this.Text = "Requestr";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.treeCollectionsContextMenu.ResumeLayout(false);
             this.tabRequests.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -142,5 +163,7 @@
         private TabPage tabPage1;
         private TabControl tabRequests;
         private ToolStripMenuItem btnNewRequest;
+        private ContextMenuStrip treeCollectionsContextMenu;
+        private ToolStripMenuItem collectionTreeDelete;
     }
 }

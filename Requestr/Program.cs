@@ -22,11 +22,13 @@ namespace Requestr
 
             var dbContext = new RequestrDbContext();
 
-            var collectionService = new CollectionService(dbContext);
-
             var importService = new ImportService(dbContext, postmanImporter);
 
-            Application.Run(new Main(importService, collectionService));
+            var collectionService = new CollectionService(dbContext);
+
+            var requestService = new RequestService(dbContext);
+
+            Application.Run(new Main(importService, collectionService, requestService));
         }
 
         private static void SetupApplicationFolder()

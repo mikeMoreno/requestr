@@ -18,6 +18,17 @@ namespace Requestr.Lib
             this.requestrDbContext = requestrDbContext;
         }
 
+        public async Task DeleteAsync(Guid id)
+        {
+            var collection = await requestrDbContext.RequestCollections
+                .Include(c => c.Requests)
+                .Where(c => c.Id == id).SingleOrDefaultAsync();
+
+            requestrDbContext.RequestCollections.Remove(collection);
+
+            await requestrDbContext.SaveChangesAsync();
+        }
+
         public async Task<List<Collection>> LoadAsync()
         {
             var dalCollections = await requestrDbContext.RequestCollections

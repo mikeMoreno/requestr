@@ -10,8 +10,13 @@ namespace Requestr
     {
         private readonly ImportService importService;
         private readonly CollectionService collectionService;
+        private readonly RequestService requestService;
 
-        public Main(ImportService importService, CollectionService collectionService)
+        public Main(
+            ImportService importService,
+            CollectionService collectionService,
+            RequestService requestService
+        )
         {
             InitializeComponent();
 
@@ -19,10 +24,11 @@ namespace Requestr
 
             this.importService = importService;
             this.collectionService = collectionService;
+            this.requestService = requestService;
 
             var collections = collectionService.LoadAsync().Result;
 
-            var nodes = collections.Select(c => GetNodes(c)).ToArray();
+            var nodes = collections.Select(c => GetNode(c)).ToArray();
 
             treeCollections.Nodes.AddRange(nodes);
         }
@@ -90,9 +96,9 @@ namespace Requestr
 
             try
             {
-                var nodes = await GetNodesAsync(fileContents);
+                var node = await GetNodeAsync(fileContents);
 
-                treeCollections.Nodes.Add(nodes);
+                treeCollections.Nodes.Add(node);
             }
             catch (ImportException unsupportedErr)
             {
@@ -104,17 +110,18 @@ namespace Requestr
             }
         }
 
-        private async Task<TreeNode> GetNodesAsync(string fileContents)
+        private async Task<TreeNode> GetNodeAsync(string fileContents)
         {
             var collection = await importService.ImportAsync(fileContents);
 
-            return GetNodes(collection);
+            return GetNode(collection);
         }
 
-        private TreeNode GetNodes(Collection collection)
+        private TreeNode GetNode(Collection collection)
         {
             var collectionNode = new CollectionNode()
             {
+                Id = collection.Id,
                 Text = collection.Name,
             };
 
@@ -179,6 +186,49 @@ namespace Requestr
             tabRequests.TabPages.Add(tabPage);
 
             tabRequests.SelectedTab = tabPage;
+        }
+
+        private void treeCollections_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right)
+            {
+                return;
+            }
+
+            treeCollectionsContextMenu.Show();
+
+        }
+
+        private async void CollectionTreeDelete_Click(object sender, EventArgs e)
+        {
+            var selected = treeCollections.SelectedNode;
+
+            if (selected is CollectionNode collectionNode)
+            {
+                var answer = MessageBox.Show($"Really delete Collection: {collectionNode.Text}?", caption: "Confirm", MessageBoxButtons.YesNo);
+
+                if (answer == DialogResult.No)
+                {
+                    return;
+                }
+
+                await collectionService.DeleteAsync(collectionNode.Id);
+
+                treeCollections.Nodes.Remove(collectionNode);
+            }
+            else if (selected is RequestNode requestNode)
+            {
+                var answer = MessageBox.Show($"Really delete Request:skds {requestNode.Text}?", caption: "Confirm", MessageBoxButtons.YesNo);
+
+                if (answer == DialogResult.No)
+                {
+                    return;
+                }
+
+                await requestService.DeleteAsync(requestNode.Id);
+
+                treeCollections.Nodes.Remove(requestNode);
+            }
         }
     }
 
