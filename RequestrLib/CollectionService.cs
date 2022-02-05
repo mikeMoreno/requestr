@@ -18,6 +18,61 @@ namespace Requestr.Lib
             this.requestrDbContext = requestrDbContext;
         }
 
+        public async Task<Collection> CloneAsync(Collection collection)
+        {
+            var existingCollections = await requestrDbContext.RequestCollections
+                .ToListAsync();
+
+            var clonedNameTemplate = $"{collection.Name} Copy";
+
+            var clonedName = clonedNameTemplate;
+
+            int i = 2;
+
+            while (existingCollections.Any(e => e.Name == clonedName))
+            {
+                clonedName = $"{clonedNameTemplate} {i}";
+
+                i++;
+            }
+
+            var clonedRequestCollection = new DAL.Models.RequestCollection()
+            {
+                Id = Guid.NewGuid(),
+                Name = clonedName,
+            };
+
+            clonedRequestCollection.Requests = collection.Requests.Select(r => new DAL.Models.Request()
+            {
+                Id = Guid.NewGuid(),
+                RequestCollectionId = clonedRequestCollection.Id,
+                Name = r.Name,
+                Method = r.Method,
+                Url = r.Url,
+            }).ToList();
+
+            await requestrDbContext.RequestCollections.AddAsync(clonedRequestCollection);
+
+            await requestrDbContext.SaveChangesAsync();
+
+            var returnedCollection = new Collection()
+            {
+                Id = clonedRequestCollection.Id,
+                Name = clonedRequestCollection.Name,
+                Requests = clonedRequestCollection.Requests.Select(r => new Request()
+                {
+                    Id = r.Id,
+                    RequestCollectionId = r.RequestCollectionId,
+                    Name = r.Name,
+                    Method = r.Method,
+                    Url = r.Url,
+                }).ToList()
+
+            };
+
+            return returnedCollection;
+        }
+
         public async Task DeleteAsync(Guid id)
         {
             var collection = await requestrDbContext.RequestCollections

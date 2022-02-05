@@ -117,7 +117,7 @@ namespace Requestr
             return GetNode(collection);
         }
 
-        private TreeNode GetNode(Collection collection)
+        private static TreeNode GetNode(Collection collection)
         {
             var collectionNode = new CollectionNode()
             {
@@ -128,17 +128,24 @@ namespace Requestr
 
             foreach (var request in collection.Requests)
             {
-                var requestNode = new RequestNode()
-                {
-                    Id = request.Id,
-                    Text = request.Name,
-                    Request = request,
-                };
+                var requestNode = GetNode(request);
 
                 collectionNode.Nodes.Add(requestNode);
             }
 
             return collectionNode;
+        }
+
+        private static TreeNode GetNode(Request request)
+        {
+            var requestNode = new RequestNode()
+            {
+                Id = request.Id,
+                Text = request.Name,
+                Request = request,
+            };
+
+            return requestNode;
         }
 
         private void TreeCollections_DoubleClick(object sender, EventArgs e)
@@ -287,14 +294,20 @@ namespace Requestr
             {
                 var collection = collectionNode.Collection;
 
-                //await collectionService.CloneAsync(collection);
+                var clonedCollection = await collectionService.CloneAsync(collection);
+
+                var clonedNode = GetNode(clonedCollection);
+
+                treeCollections.Nodes.Add(clonedNode);
             }
             else if (selected is RequestNode requestNode)
             {
                 var request = requestNode.Request;
 
                 var clonedRequest = await requestService.CloneAsync(request);
-                
+
+                // TODO: GetNode method for requests also?
+
                 var clonedNode = new RequestNode()
                 {
                     Id = clonedRequest.Id,
