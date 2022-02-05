@@ -42,6 +42,7 @@ namespace Requestr.Lib
                 Requests = dalCollection.Requests.Select(r => new Request()
                 {
                     Id = r.Id,
+                    RequestCollectionId = r.RequestCollectionId,
                     Name = r.Name,
                     Method = r.Method,
                     Url = r.Url,

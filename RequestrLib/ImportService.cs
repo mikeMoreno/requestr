@@ -40,6 +40,7 @@ namespace Requestr.Lib
                 Requests = collection.Requests.Select(r => new DAL.Models.Request()
                 {
                     Id = r.Id,
+                    RequestCollectionId = r.RequestCollectionId,
                     Name = r.Name,
                     Method = r.Method,
                     Url = r.Url,
@@ -66,6 +67,7 @@ namespace Requestr.Lib
                 collection.Requests.Add(new Models.Request()
                 {
                     Id = Guid.NewGuid(),
+                    RequestCollectionId = collection.Id,
                     Name = requestItem.Name,
                     Method = requestItem.Request.Method,
                     Url = requestItem.Request.Url.Raw,

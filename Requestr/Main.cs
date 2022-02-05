@@ -197,7 +197,6 @@ namespace Requestr
             }
 
             treeCollectionsContextMenu.Show();
-
         }
 
         private async void CollectionTreeDelete_Click(object sender, EventArgs e)
@@ -277,6 +276,33 @@ namespace Requestr
                 await requestService.UpdateAsync(request);
 
                 requestNode.Text = request.Name;
+            }
+        }
+
+        private async void CollectionTreeClone_Click(object sender, EventArgs e)
+        {
+            var selected = treeCollections.SelectedNode;
+
+            if (selected is CollectionNode collectionNode)
+            {
+                var collection = collectionNode.Collection;
+
+                //await collectionService.CloneAsync(collection);
+            }
+            else if (selected is RequestNode requestNode)
+            {
+                var request = requestNode.Request;
+
+                var clonedRequest = await requestService.CloneAsync(request);
+                
+                var clonedNode = new RequestNode()
+                {
+                    Id = clonedRequest.Id,
+                    Text = clonedRequest.Name,
+                    Request = clonedRequest,
+                };
+
+                requestNode.Parent.Nodes.Add(clonedNode);
             }
         }
     }

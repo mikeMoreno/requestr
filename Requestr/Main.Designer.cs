@@ -37,9 +37,10 @@
             this.treeCollections = new System.Windows.Forms.TreeView();
             this.treeCollectionsContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.collectionTreeDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.collectionTreeRename = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabRequests = new System.Windows.Forms.TabControl();
-            this.collectionTreeRename = new System.Windows.Forms.ToolStripMenuItem();
+            this.collectionTreeClone = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.treeCollectionsContextMenu.SuspendLayout();
             this.tabRequests.SuspendLayout();
@@ -101,10 +102,11 @@
             // treeCollectionsContextMenu
             // 
             this.treeCollectionsContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.collectionTreeClone,
             this.collectionTreeDelete,
             this.collectionTreeRename});
             this.treeCollectionsContextMenu.Name = "treeCollectionsContextMenu";
-            this.treeCollectionsContextMenu.Size = new System.Drawing.Size(181, 70);
+            this.treeCollectionsContextMenu.Size = new System.Drawing.Size(181, 92);
             // 
             // collectionTreeDelete
             // 
@@ -112,6 +114,13 @@
             this.collectionTreeDelete.Size = new System.Drawing.Size(180, 22);
             this.collectionTreeDelete.Text = "Delete";
             this.collectionTreeDelete.Click += new System.EventHandler(this.CollectionTreeDelete_Click);
+            // 
+            // collectionTreeRename
+            // 
+            this.collectionTreeRename.Name = "collectionTreeRename";
+            this.collectionTreeRename.Size = new System.Drawing.Size(180, 22);
+            this.collectionTreeRename.Text = "Rename";
+            this.collectionTreeRename.Click += new System.EventHandler(this.CollectionTreeRename_Click);
             // 
             // tabPage1
             // 
@@ -135,12 +144,12 @@
             this.tabRequests.Size = new System.Drawing.Size(757, 434);
             this.tabRequests.TabIndex = 2;
             // 
-            // collectionTreeRename
+            // collectionTreeClone
             // 
-            this.collectionTreeRename.Name = "collectionTreeRename";
-            this.collectionTreeRename.Size = new System.Drawing.Size(180, 22);
-            this.collectionTreeRename.Text = "Rename";
-            this.collectionTreeRename.Click += new System.EventHandler(this.CollectionTreeRename_Click);
+            this.collectionTreeClone.Name = "collectionTreeClone";
+            this.collectionTreeClone.Size = new System.Drawing.Size(180, 22);
+            this.collectionTreeClone.Text = "Clone";
+            this.collectionTreeClone.Click += new System.EventHandler(this.CollectionTreeClone_Click);
             // 
             // Main
             // 
@@ -175,5 +184,6 @@
         private ContextMenuStrip treeCollectionsContextMenu;
         private ToolStripMenuItem collectionTreeDelete;
         private ToolStripMenuItem collectionTreeRename;
+        private ToolStripMenuItem collectionTreeClone;
     }
 }

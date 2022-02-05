@@ -23,7 +23,7 @@ namespace Requestr.DAL.Models
         public string Url { get; set; }
 
         [Required]
-        Guid RequestCollectionId { get; set; }
+        public Guid RequestCollectionId { get; set; }
 
         public virtual RequestCollection RequestCollection { get; set; }
     }
