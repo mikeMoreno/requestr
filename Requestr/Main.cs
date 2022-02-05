@@ -9,14 +9,22 @@ namespace Requestr
     public partial class Main : Form
     {
         private readonly ImportService importService;
+        private readonly CollectionService collectionService;
 
-        public Main(ImportService importService)
+        public Main(ImportService importService, CollectionService collectionService)
         {
             InitializeComponent();
 
             tabRequests.TabPages.Clear();
 
             this.importService = importService;
+            this.collectionService = collectionService;
+
+            var collections = collectionService.LoadAsync().Result;
+
+            var nodes = collections.Select(c => GetNodes(c)).ToArray();
+
+            treeCollections.Nodes.AddRange(nodes);
         }
 
         private void BtnExit_Click(object sender, EventArgs e)
@@ -100,6 +108,11 @@ namespace Requestr
         {
             var collection = await importService.ImportAsync(fileContents);
 
+            return GetNodes(collection);
+        }
+
+        private TreeNode GetNodes(Collection collection)
+        {
             var collectionNode = new CollectionNode()
             {
                 Text = collection.Name,

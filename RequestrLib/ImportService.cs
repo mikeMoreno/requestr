@@ -54,6 +54,7 @@ namespace Requestr.Lib
                 {
                     Name = r.Name,
                     Method = r.Method,
+                    Url = r.Url,
                 }).ToList()
             };
 

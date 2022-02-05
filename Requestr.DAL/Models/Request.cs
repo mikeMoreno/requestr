@@ -20,6 +20,9 @@ namespace Requestr.DAL.Models
         public string Name { get; set; }
 
         [Required]
+        public string Url { get; set; }
+
+        [Required]
         [ForeignKey("RequestCollection")]
         Guid RequestCollectionId { get; set; }
 
