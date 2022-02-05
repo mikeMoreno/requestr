@@ -1,4 +1,4 @@
-﻿namespace Requestr.Forms.Controls
+﻿namespace Requestr.Forms
 {
     partial class InputBox
     {

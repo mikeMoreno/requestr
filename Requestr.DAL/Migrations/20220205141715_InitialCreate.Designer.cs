@@ -11,7 +11,7 @@ using Requestr.DAL;
 namespace Requestr.DAL.Migrations
 {
     [DbContext(typeof(RequestrDbContext))]
-    [Migration("20220205034136_InitialCreate")]
+    [Migration("20220205141715_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,12 +26,23 @@ namespace Requestr.DAL.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Method")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("RequestCollectionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RequestCollectionId");
 
                     b.ToTable("Requests");
                 });
@@ -42,9 +53,29 @@ namespace Requestr.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("RequestCollections");
+                });
+
+            modelBuilder.Entity("Requestr.DAL.Models.Request", b =>
+                {
+                    b.HasOne("Requestr.DAL.Models.RequestCollection", "RequestCollection")
+                        .WithMany("Requests")
+                        .HasForeignKey("RequestCollectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RequestCollection");
+                });
+
+            modelBuilder.Entity("Requestr.DAL.Models.RequestCollection", b =>
+                {
+                    b.Navigation("Requests");
                 });
 #pragma warning restore 612, 618
         }

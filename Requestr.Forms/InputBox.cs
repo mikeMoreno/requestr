@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Requestr.Forms.Controls
+namespace Requestr.Forms
 {
     public partial class InputBox : Form
     {
