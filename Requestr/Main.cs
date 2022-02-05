@@ -65,7 +65,7 @@ namespace Requestr
             tabRequests.SelectedTab = tabPage;
         }
 
-        private void BtnImport_Click(object sender, EventArgs e)
+        private async void BtnImport_Click(object sender, EventArgs e)
         {
             using var openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = false;
@@ -82,7 +82,7 @@ namespace Requestr
 
             try
             {
-                var nodes = GetNodes(fileContents);
+                var nodes = await GetNodesAsync(fileContents);
 
                 treeCollections.Nodes.Add(nodes);
             }
@@ -96,9 +96,9 @@ namespace Requestr
             }
         }
 
-        private TreeNode GetNodes(string fileContents)
+        private async Task<TreeNode> GetNodesAsync(string fileContents)
         {
-            var collection = importService.Import(fileContents);
+            var collection = await importService.ImportAsync(fileContents);
 
             var collectionNode = new CollectionNode()
             {

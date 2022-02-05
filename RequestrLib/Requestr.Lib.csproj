@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Requestr.DAL\Requestr.DAL.csproj" />
     <ProjectReference Include="..\Requestr.Importer\Requestr.PostmanImporter.csproj" />
   </ItemGroup>
 

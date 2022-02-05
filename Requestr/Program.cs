@@ -1,3 +1,4 @@
+using Requestr.DAL;
 using Requestr.Lib;
 using Requestr.PostmanImporter;
 
@@ -19,7 +20,9 @@ namespace Requestr
 
             var postmanImporter = new RequestImporter();
 
-            var importService = new ImportService(postmanImporter);
+            var dbContext = new RequestrDbContext();
+
+            var importService = new ImportService(dbContext, postmanImporter);
 
             Application.Run(new Main(importService));
         }

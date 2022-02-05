@@ -1,4 +1,5 @@
-﻿using Requestr.Lib.Exceptions;
+﻿using Requestr.DAL;
+using Requestr.Lib.Exceptions;
 using Requestr.PostmanImporter;
 using Requestr.PostmanImporter.Exceptions;
 using Requestr.PostmanImporter.Models;
@@ -7,14 +8,16 @@ namespace Requestr.Lib
 {
     public class ImportService
     {
+        private readonly RequestrDbContext requestrDbContext;
         private readonly RequestImporter postmanImporter;
 
-        public ImportService(RequestImporter postmanImporter)
+        public ImportService(RequestrDbContext requestrDbContext, RequestImporter postmanImporter)
         {
+            this.requestrDbContext = requestrDbContext;
             this.postmanImporter = postmanImporter;
         }
 
-        public Models.Collection Import(string fileContents)
+        public async Task<Models.Collection> ImportAsync(string fileContents)
         {
             Collection postmanCollection;
 
@@ -43,6 +46,20 @@ namespace Requestr.Lib
                     Url = requestItem.Request.Url.Raw,
                 });
             }
+
+            var dalCollection = new DAL.Models.RequestCollection()
+            {
+                Name = collection.Name,
+                Requests = collection.Requests.Select(r => new DAL.Models.Request()
+                {
+                    Name = r.Name,
+                    Method = r.Method,
+                }).ToList()
+            };
+
+            await requestrDbContext.RequestCollections.AddAsync(dalCollection);
+
+            await requestrDbContext.SaveChangesAsync();
 
             return collection;
         }
