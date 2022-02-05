@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtBody = new System.Windows.Forms.TextBox();
+            this.txtBody = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // txtBody
             // 
             this.txtBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtBody.Location = new System.Drawing.Point(0, 0);
-            this.txtBody.Multiline = true;
             this.txtBody.Name = "txtBody";
             this.txtBody.Size = new System.Drawing.Size(690, 298);
             this.txtBody.TabIndex = 0;
+            this.txtBody.Text = "";
             // 
             // ResponseBodyPanel
             // 
@@ -48,12 +48,11 @@
             this.Name = "ResponseBodyPanel";
             this.Size = new System.Drawing.Size(690, 298);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private TextBox txtBody;
+        private RichTextBox txtBody;
     }
 }

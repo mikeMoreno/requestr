@@ -6,6 +6,9 @@
         <UseWindowsForms>true</UseWindowsForms>
     </PropertyGroup>
     <ItemGroup>
+      <PackageReference Include="AngleSharp" Version="0.16.1" />
+    </ItemGroup>
+    <ItemGroup>
       <ProjectReference Include="..\RequestrLib\Requestr.Lib.csproj" />
     </ItemGroup>
 </Project>

@@ -1,4 +1,6 @@
-﻿using Requestr.Lib;
+﻿using AngleSharp.Html;
+using AngleSharp.Html.Parser;
+using Requestr.Lib;
 using Requestr.Lib.Models;
 using Requestr.PostmanImporter;
 using System;
@@ -57,7 +59,6 @@ namespace Requestr.Forms
             httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
             httpClient.DefaultRequestHeaders.Add("Connection", "keep-alive");
 
-
             var cookies = await cookieService.GetCookiesAsync(url);
 
             var stopwatch = new Stopwatch();
@@ -81,7 +82,32 @@ namespace Requestr.Forms
             lblSize.Text = $"Size: {Encoding.UTF8.GetByteCount(responseContent)}";
             lblTime.Text = $"Time: {stopwatch.ElapsedMilliseconds} ms";
 
-            responseBodyPanel.SetText(responseContent);
+            responseBodyPanel.SetText(FormatResponse(responseContent));
+        }
+
+        private static string FormatResponse(string responseContent)
+        {
+            try
+            {
+                var parser = new HtmlParser();
+                var document = parser.ParseDocument(responseContent);
+
+                using var writer = new StringWriter();
+
+                document.ToHtml(writer, new PrettyMarkupFormatter
+                {
+                    Indentation = "\t",
+                    NewLine = "\n"
+                });
+
+                var indentedText = writer.ToString();
+
+                return indentedText;
+            }
+            catch
+            {
+                return responseContent;
+            }
         }
 
         private async Task<HttpResponseMessage> SendRequestAsync(string method, string url, string cookies, int requestsMade = 0)
