@@ -31,7 +31,6 @@ namespace Requestr
             Application.Run(new Main(importService, collectionService, requestService, requestPanelFactory));
         }
 
-
         private static void SetupApplicationFolder()
         {
             if (!Directory.Exists(Globals.ApplicationFolder))
