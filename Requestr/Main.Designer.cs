@@ -36,14 +36,14 @@
             this.btnExit = new System.Windows.Forms.ToolStripMenuItem();
             this.treeCollections = new System.Windows.Forms.TreeView();
             this.treeCollectionsContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.collectionTreeClone = new System.Windows.Forms.ToolStripMenuItem();
             this.collectionTreeDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.collectionTreeRename = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabRequests = new System.Windows.Forms.TabControl();
-            this.collectionTreeClone = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabsRequests = new System.Windows.Forms.TabControl();
             this.menuStrip1.SuspendLayout();
             this.treeCollectionsContextMenu.SuspendLayout();
-            this.tabRequests.SuspendLayout();
+            this.tabsRequests.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -69,21 +69,22 @@
             // btnNewRequest
             // 
             this.btnNewRequest.Name = "btnNewRequest";
-            this.btnNewRequest.Size = new System.Drawing.Size(119, 22);
+            this.btnNewRequest.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.btnNewRequest.Size = new System.Drawing.Size(180, 22);
             this.btnNewRequest.Text = "New";
             this.btnNewRequest.Click += new System.EventHandler(this.BtnNewRequest_Click);
             // 
             // btnImport
             // 
             this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(119, 22);
+            this.btnImport.Size = new System.Drawing.Size(180, 22);
             this.btnImport.Text = "Import...";
             this.btnImport.Click += new System.EventHandler(this.BtnImport_Click);
             // 
             // btnExit
             // 
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(119, 22);
+            this.btnExit.Size = new System.Drawing.Size(180, 22);
             this.btnExit.Text = "Exit";
             this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
@@ -96,7 +97,7 @@
             this.treeCollections.Name = "treeCollections";
             this.treeCollections.Size = new System.Drawing.Size(217, 434);
             this.treeCollections.TabIndex = 1;
-            this.treeCollections.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeCollections_NodeMouseClick);
+            this.treeCollections.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeCollections_NodeMouseClick);
             this.treeCollections.DoubleClick += new System.EventHandler(this.TreeCollections_DoubleClick);
             // 
             // treeCollectionsContextMenu
@@ -106,19 +107,26 @@
             this.collectionTreeDelete,
             this.collectionTreeRename});
             this.treeCollectionsContextMenu.Name = "treeCollectionsContextMenu";
-            this.treeCollectionsContextMenu.Size = new System.Drawing.Size(181, 92);
+            this.treeCollectionsContextMenu.Size = new System.Drawing.Size(118, 70);
+            // 
+            // collectionTreeClone
+            // 
+            this.collectionTreeClone.Name = "collectionTreeClone";
+            this.collectionTreeClone.Size = new System.Drawing.Size(117, 22);
+            this.collectionTreeClone.Text = "Clone";
+            this.collectionTreeClone.Click += new System.EventHandler(this.CollectionTreeClone_Click);
             // 
             // collectionTreeDelete
             // 
             this.collectionTreeDelete.Name = "collectionTreeDelete";
-            this.collectionTreeDelete.Size = new System.Drawing.Size(180, 22);
+            this.collectionTreeDelete.Size = new System.Drawing.Size(117, 22);
             this.collectionTreeDelete.Text = "Delete";
             this.collectionTreeDelete.Click += new System.EventHandler(this.CollectionTreeDelete_Click);
             // 
             // collectionTreeRename
             // 
             this.collectionTreeRename.Name = "collectionTreeRename";
-            this.collectionTreeRename.Size = new System.Drawing.Size(180, 22);
+            this.collectionTreeRename.Size = new System.Drawing.Size(117, 22);
             this.collectionTreeRename.Text = "Rename";
             this.collectionTreeRename.Click += new System.EventHandler(this.CollectionTreeRename_Click);
             // 
@@ -132,40 +140,35 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabRequests
+            // tabsRequests
             // 
-            this.tabRequests.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tabsRequests.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabRequests.Controls.Add(this.tabPage1);
-            this.tabRequests.Location = new System.Drawing.Point(214, 27);
-            this.tabRequests.Name = "tabRequests";
-            this.tabRequests.SelectedIndex = 0;
-            this.tabRequests.Size = new System.Drawing.Size(757, 434);
-            this.tabRequests.TabIndex = 2;
-            // 
-            // collectionTreeClone
-            // 
-            this.collectionTreeClone.Name = "collectionTreeClone";
-            this.collectionTreeClone.Size = new System.Drawing.Size(180, 22);
-            this.collectionTreeClone.Text = "Clone";
-            this.collectionTreeClone.Click += new System.EventHandler(this.CollectionTreeClone_Click);
+            this.tabsRequests.Controls.Add(this.tabPage1);
+            this.tabsRequests.Location = new System.Drawing.Point(214, 27);
+            this.tabsRequests.Name = "tabsRequests";
+            this.tabsRequests.SelectedIndex = 0;
+            this.tabsRequests.Size = new System.Drawing.Size(757, 434);
+            this.tabsRequests.TabIndex = 2;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(971, 461);
-            this.Controls.Add(this.tabRequests);
+            this.Controls.Add(this.tabsRequests);
             this.Controls.Add(this.treeCollections);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(400, 200);
             this.Name = "Main";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Requestr";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.treeCollectionsContextMenu.ResumeLayout(false);
-            this.tabRequests.ResumeLayout(false);
+            this.tabsRequests.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -179,7 +182,7 @@
         private ToolStripMenuItem btnExit;
         private TreeView treeCollections;
         private TabPage tabPage1;
-        private TabControl tabRequests;
+        private TabControl tabsRequests;
         private ToolStripMenuItem btnNewRequest;
         private ContextMenuStrip treeCollectionsContextMenu;
         private ToolStripMenuItem collectionTreeDelete;

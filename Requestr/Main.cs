@@ -19,7 +19,7 @@ namespace Requestr
         {
             InitializeComponent();
 
-            tabRequests.TabPages.Clear();
+            tabsRequests.TabPages.Clear();
 
             this.importService = importService;
             this.collectionService = collectionService;
@@ -53,29 +53,25 @@ namespace Requestr
 
             itemClose.Click += (sender, e) =>
             {
-                tabRequests.TabPages.Remove(tabRequests.SelectedTab);
+                tabsRequests.TabPages.Remove(tabsRequests.SelectedTab);
             };
 
             tabPage.ContextMenuStrip.Items.Add(itemClose);
 
-            var requestItem = new Request()
+            var request = new Request()
             {
                 Name = "Untitled",
                 Method = "GET",
                 Url = "https://example.com",
             };
 
-            var requestPanel = new RequestPanel
-            {
-                Dock = DockStyle.Fill,
-                RequestItem = requestItem,
-            };
+            var requestPanel = RequestPanelFactory.Build(request);
 
             tabPage.Controls.Add(requestPanel);
 
-            tabRequests.TabPages.Add(tabPage);
+            tabsRequests.TabPages.Add(tabPage);
 
-            tabRequests.SelectedTab = tabPage;
+            tabsRequests.SelectedTab = tabPage;
         }
 
         private async void BtnImport_Click(object sender, EventArgs e)
@@ -154,11 +150,11 @@ namespace Requestr
                 return;
             }
 
-            var (existingTab, index) = tabRequests.FindByKey(node.Id);
+            var existingTab = tabsRequests.TabPages.OfType<RequestTab>().SingleOrDefault(t => t.Id == node.Id);
 
             if (existingTab != null)
             {
-                tabRequests.SelectedIndex = index;
+                tabsRequests.SelectedTab = existingTab;
 
                 return;
             }
@@ -177,25 +173,21 @@ namespace Requestr
 
             itemClose.Click += (sender, e) =>
             {
-                tabRequests.TabPages.Remove(tabRequests.SelectedTab);
+                tabsRequests.TabPages.Remove(tabsRequests.SelectedTab);
             };
 
             tabPage.ContextMenuStrip.Items.Add(itemClose);
 
-            var requestPanel = new RequestPanel
-            {
-                Dock = DockStyle.Fill,
-                RequestItem = node.Request,
-            };
+            var requestPanel = RequestPanelFactory.Build(node.Request);
 
             tabPage.Controls.Add(requestPanel);
 
-            tabRequests.TabPages.Add(tabPage);
+            tabsRequests.TabPages.Add(tabPage);
 
-            tabRequests.SelectedTab = tabPage;
+            tabsRequests.SelectedTab = tabPage;
         }
 
-        private void treeCollections_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void TreeCollections_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button != MouseButtons.Right)
             {
@@ -316,32 +308,6 @@ namespace Requestr
 
                 requestNode.Parent.Nodes.Add(clonedNode);
             }
-        }
-    }
-
-    static class TabControlExtensions
-    {
-        public static (RequestTab, int) FindByKey(this TabControl tabControl, Guid key)
-        {
-            int i = 0;
-
-            foreach (var tabPage in tabControl.TabPages)
-            {
-                i++;
-
-                if (tabPage is not RequestTab tab)
-                {
-
-                    continue;
-                }
-
-                if (tab.Id == key)
-                {
-                    return (tab, i - 1);
-                }
-            }
-
-            return (null, i);
         }
     }
 }
