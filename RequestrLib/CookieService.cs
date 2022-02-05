@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Requestr.Lib
 {
-    public class CookieService
+    public class CookieService : ICookieService
     {
         private readonly RequestrDbContext requestrDbContext;
 

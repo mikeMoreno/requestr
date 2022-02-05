@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Requestr.DAL;
 using Requestr.Forms;
 using Requestr.Lib;
@@ -14,21 +16,24 @@ namespace Requestr
 
             SetupApplicationFolder();
 
-            var postmanImporter = new RequestImporter();
+            using IHost host = Host.CreateDefaultBuilder()
+                .ConfigureServices((_, services) => services
+                            .AddSingleton<RequestrDbContext>()
+                            .AddSingleton<RequestPanelFactory>()
+                            .AddSingleton<IRequestImporter, RequestImporter>()
+                            .AddSingleton<IRequestService, RequestService>()
+                            .AddSingleton<IImportService, ImportService>()
+                            .AddSingleton<ICollectionService, CollectionService>()
+                            .AddSingleton<ICookieService, CookieService>()
+                            .AddSingleton<Main>())
+                            .Build();
 
-            var dbContext = new RequestrDbContext();
+            using (var serviceScope = host.Services.CreateScope())
+            {
+                var services = serviceScope.ServiceProvider;
 
-            var importService = new ImportService(dbContext, postmanImporter);
-
-            var collectionService = new CollectionService(dbContext);
-
-            var requestService = new RequestService(dbContext);
-
-            var cookieService = new CookieService(dbContext);
-
-            var requestPanelFactory = new RequestPanelFactory(cookieService);
-
-            Application.Run(new Main(importService, collectionService, requestService, requestPanelFactory));
+                Application.Run(services.GetRequiredService<Main>());
+            }
         }
 
         private static void SetupApplicationFolder()

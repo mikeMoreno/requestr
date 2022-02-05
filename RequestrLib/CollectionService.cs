@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Requestr.Lib
 {
-    public class CollectionService
+    public class CollectionService : ICollectionService
     {
         private readonly RequestrDbContext requestrDbContext;
 

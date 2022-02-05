@@ -7,16 +7,16 @@ namespace Requestr
 {
     public partial class Main : Form
     {
-        private readonly ImportService importService;
-        private readonly CollectionService collectionService;
-        private readonly RequestService requestService;
+        private readonly IImportService importService;
+        private readonly ICollectionService collectionService;
+        private readonly IRequestService requestService;
         private readonly RequestPanelFactory requestPanelFactory;
 
 
         public Main(
-            ImportService importService,
-            CollectionService collectionService,
-            RequestService requestService,
+            IImportService importService,
+            ICollectionService collectionService,
+            IRequestService requestService,
             RequestPanelFactory requestPanelFactory
         )
         {

@@ -10,9 +10,9 @@ namespace Requestr.Forms
 {
     public  class RequestPanelFactory
     {
-        private readonly CookieService cookieService;
+        private readonly ICookieService cookieService;
 
-        public RequestPanelFactory(CookieService cookieService)
+        public RequestPanelFactory(ICookieService cookieService)
         {
             this.cookieService = cookieService;
         }

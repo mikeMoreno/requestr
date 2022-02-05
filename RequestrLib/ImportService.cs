@@ -7,12 +7,12 @@ using Requestr.PostmanImporter.Exceptions;
 
 namespace Requestr.Lib
 {
-    public class ImportService
+    public class ImportService : IImportService
     {
         private readonly RequestrDbContext requestrDbContext;
-        private readonly RequestImporter postmanImporter;
+        private readonly IRequestImporter postmanImporter;
 
-        public ImportService(RequestrDbContext requestrDbContext, RequestImporter postmanImporter)
+        public ImportService(RequestrDbContext requestrDbContext, IRequestImporter postmanImporter)
         {
             this.requestrDbContext = requestrDbContext;
             this.postmanImporter = postmanImporter;

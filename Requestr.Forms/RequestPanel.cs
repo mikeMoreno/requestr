@@ -20,9 +20,9 @@ namespace Requestr.Forms
     public partial class RequestPanel : UserControl
     {
         private readonly HttpClient httpClient;
-        private readonly CookieService cookieService;
+        private readonly ICookieService cookieService;
 
-        internal RequestPanel(Request request, CookieService cookieService)
+        internal RequestPanel(Request request, ICookieService cookieService)
         {
             InitializeComponent();
 

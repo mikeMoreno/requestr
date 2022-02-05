@@ -3,7 +3,7 @@ using Requestr.PostmanImporter.Models;
 
 namespace Requestr.PostmanImporter
 {
-    public class RequestImporter
+    public class RequestImporter : IRequestImporter
     {
         public Collection Import(string contents)
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Requestr.Lib
 {
-    public class RequestService
+    public class RequestService : IRequestService
     {
         private readonly RequestrDbContext requestrDbContext;
 
