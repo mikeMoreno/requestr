@@ -1,4 +1,4 @@
-﻿namespace Requestr.Forms
+﻿namespace Requestr.Forms.Controls
 {
     partial class RequestPanel
     {

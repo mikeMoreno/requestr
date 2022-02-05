@@ -2,10 +2,10 @@
     <PropertyGroup>
         <TargetFramework>net6.0-windows</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
     </PropertyGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Requestr.Importer\Requestr.PostmanImporter.csproj" />
+      <ProjectReference Include="..\RequestrLib\Requestr.Lib.csproj" />
     </ItemGroup>
 </Project>

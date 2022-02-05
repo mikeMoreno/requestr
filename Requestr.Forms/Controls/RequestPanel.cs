@@ -1,4 +1,5 @@
-﻿using Requestr.PostmanImporter;
+﻿using Requestr.Lib.Models;
+using Requestr.PostmanImporter;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,24 +10,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Requestr.Forms
+namespace Requestr.Forms.Controls
 {
     public partial class RequestPanel : UserControl
     {
-        private RequestItem _requestItem;
+        private Request _request;
 
-        public RequestItem RequestItem {
+        public Request RequestItem {
             get
             {
-                return _requestItem;
+                return _request;
             }
 
             init
             {
-                _requestItem = value;
+                _request = value;
 
-                ComboMethod.SelectedItem = _requestItem!.Request.Method;
-                TextUrl.Text = _requestItem.Request.Url.Raw;
+                ComboMethod.SelectedItem = _request.Method;
+                TextUrl.Text = _request.Url;
             }
         }
 

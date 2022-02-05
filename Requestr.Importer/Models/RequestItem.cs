@@ -5,11 +5,11 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Requestr.PostmanImporter
+namespace Requestr.PostmanImporter.Models
 {
     public class RequestItem
     {
-        public Guid Key { get; }
+        //public Guid Key { get; }
 
         [JsonPropertyName("name")]
         public string Name { get; set; }
@@ -17,9 +17,9 @@ namespace Requestr.PostmanImporter
         [JsonPropertyName("request")]
         public Request Request { get; set; }
 
-        public RequestItem()
-        {
-            Key = Guid.NewGuid();
-        }
+        //public RequestItem()
+        //{
+        //    Key = Guid.NewGuid();
+        //}
     }
 }

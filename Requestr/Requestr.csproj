@@ -2,7 +2,7 @@
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net6.0-windows</TargetFramework>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
@@ -10,7 +10,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Requestr.DAL\Requestr.DAL.csproj" />
         <ProjectReference Include="..\Requestr.Forms\Requestr.Forms.csproj" />
-        <ProjectReference Include="..\Requestr.Importer\Requestr.PostmanImporter.csproj" />
+        <ProjectReference Include="..\Requestr.Globals\Requestr.Globals.csproj" />
         <ProjectReference Include="..\RequestrLib\Requestr.Lib.csproj" />
     </ItemGroup>
 </Project>

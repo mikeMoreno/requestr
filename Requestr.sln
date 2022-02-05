@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Requestr", "Requestr\Requestr.csproj", "{B393A395-8091-45C6-93E4-33B50E52DA64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Requestr", "Requestr\Requestr.csproj", "{B393A395-8091-45C6-93E4-33B50E52DA64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Requestr.Lib", "RequestrLib\Requestr.Lib.csproj", "{F753221F-5164-4B56-860D-DD3C26732CB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Requestr.Lib", "RequestrLib\Requestr.Lib.csproj", "{F753221F-5164-4B56-860D-DD3C26732CB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Requestr.DAL", "Requestr.DAL\Requestr.DAL.csproj", "{EC49C8A8-9912-4288-BF92-0BE6DA7C2A28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Requestr.DAL", "Requestr.DAL\Requestr.DAL.csproj", "{EC49C8A8-9912-4288-BF92-0BE6DA7C2A28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Requestr.PostmanImporter", "Requestr.Importer\Requestr.PostmanImporter.csproj", "{07745549-72BB-4827-8315-4F12BCE8B777}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Requestr.PostmanImporter", "Requestr.Importer\Requestr.PostmanImporter.csproj", "{07745549-72BB-4827-8315-4F12BCE8B777}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Requestr.Forms", "Requestr.Forms\Requestr.Forms.csproj", "{A480B4D2-7D6A-4E83-83D8-F4B7C7696B4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Requestr.Forms", "Requestr.Forms\Requestr.Forms.csproj", "{A480B4D2-7D6A-4E83-83D8-F4B7C7696B4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Requestr.Globals", "Requestr.Globals\Requestr.Globals.csproj", "{D641C9CD-AE46-44A2-A6CA-AC8ED2B14067}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A480B4D2-7D6A-4E83-83D8-F4B7C7696B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A480B4D2-7D6A-4E83-83D8-F4B7C7696B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A480B4D2-7D6A-4E83-83D8-F4B7C7696B4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D641C9CD-AE46-44A2-A6CA-AC8ED2B14067}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D641C9CD-AE46-44A2-A6CA-AC8ED2B14067}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D641C9CD-AE46-44A2-A6CA-AC8ED2B14067}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D641C9CD-AE46-44A2-A6CA-AC8ED2B14067}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,16 +1,14 @@
-﻿using Requestr.Lib.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Requestr.Forms
+namespace Requestr.DAL.Models
 {
-    public class RequestNode : TreeNode
+    public class RequestCollection
     {
         public Guid Id { get; set; }
 
-        public Request Request { get; init; }
     }
 }

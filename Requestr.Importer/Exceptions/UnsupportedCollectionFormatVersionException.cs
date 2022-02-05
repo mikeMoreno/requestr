@@ -1,4 +1,4 @@
-﻿namespace Requestr.PostmanImporter
+﻿namespace Requestr.PostmanImporter.Exceptions
 {
     public class UnsupportedCollectionFormatVersionException : Exception
     {

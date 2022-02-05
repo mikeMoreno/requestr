@@ -1,3 +1,4 @@
+using Requestr.Lib;
 using Requestr.PostmanImporter;
 
 namespace Requestr
@@ -14,10 +15,21 @@ namespace Requestr
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
+            SetupApplicationFolder();
 
             var postmanImporter = new RequestImporter();
 
-            Application.Run(new Main(postmanImporter));
+            var importService = new ImportService(postmanImporter);
+
+            Application.Run(new Main(importService));
+        }
+
+        private static void SetupApplicationFolder()
+        {
+            if (!Directory.Exists(Globals.ApplicationFolder))
+            {
+                Directory.CreateDirectory(Globals.ApplicationFolder);
+            }
         }
     }
 }

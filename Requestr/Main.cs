@@ -1,20 +1,22 @@
 using Requestr.Forms;
-using Requestr.PostmanImporter;
-using static System.Windows.Forms.TabControl;
+using Requestr.Forms.Controls;
+using Requestr.Lib;
+using Requestr.Lib.Exceptions;
+using Requestr.Lib.Models;
 
 namespace Requestr
 {
     public partial class Main : Form
     {
-        private readonly RequestImporter requestImporter;
+        private readonly ImportService importService;
 
-        public Main(RequestImporter requestImporter)
+        public Main(ImportService importService)
         {
             InitializeComponent();
 
             tabRequests.TabPages.Clear();
 
-            this.requestImporter = requestImporter;
+            this.importService = importService;
         }
 
         private void BtnExit_Click(object sender, EventArgs e)
@@ -26,7 +28,7 @@ namespace Requestr
         {
             var tabPage = new RequestTab()
             {
-                Key = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 Text = "Untitled",
                 ContextMenuStrip = new ContextMenuStrip(),
             };
@@ -43,17 +45,11 @@ namespace Requestr
 
             tabPage.ContextMenuStrip.Items.Add(itemClose);
 
-            var requestItem = new RequestItem()
+            var requestItem = new Request()
             {
                 Name = "Untitled",
-                Request = new Request()
-                {
-                    Method = "GET",
-                    Url = new UrlInfo()
-                    {
-                        Raw = "https://example.com",
-                    }
-                }
+                Method = "GET",
+                Url = "https://example.com",
             };
 
             var requestPanel = new RequestPanel
@@ -73,6 +69,7 @@ namespace Requestr
         {
             using var openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "JSON Files (*.json)|*.json";
 
             var result = openFileDialog.ShowDialog();
 
@@ -89,7 +86,7 @@ namespace Requestr
 
                 treeCollections.Nodes.Add(nodes);
             }
-            catch (UnsupportedCollectionFormatVersionException unsupportedErr)
+            catch (ImportException unsupportedErr)
             {
                 MessageBox.Show(unsupportedErr.Message);
             }
@@ -101,20 +98,20 @@ namespace Requestr
 
         private TreeNode GetNodes(string fileContents)
         {
-            var collection = requestImporter.Import(fileContents);
+            var collection = importService.Import(fileContents);
 
             var collectionNode = new CollectionNode()
             {
-                Text = collection.Info.Name,
+                Text = collection.Name,
             };
 
-            foreach (var requestItem in collection.Item)
+            foreach (var request in collection.Requests)
             {
                 var requestNode = new RequestNode()
                 {
-                    Key = requestItem.Key,
-                    Text = requestItem.Name,
-                    RequestItem = requestItem,
+                    Id = request.Id,
+                    Text = request.Name,
+                    Request = request,
                 };
 
                 collectionNode.Nodes.Add(requestNode);
@@ -130,7 +127,7 @@ namespace Requestr
                 return;
             }
 
-            var (existingTab, index) = tabRequests.FindByKey(node.Key);
+            var (existingTab, index) = tabRequests.FindByKey(node.Id);
 
             if (existingTab != null)
             {
@@ -141,8 +138,8 @@ namespace Requestr
 
             var tabPage = new RequestTab()
             {
-                Key = node.RequestItem!.Key,
-                Text = node.RequestItem!.Name,
+                Id = node.Request.Id,
+                Text = node.Request.Name,
                 ContextMenuStrip = new ContextMenuStrip(),
             };
 
@@ -161,7 +158,7 @@ namespace Requestr
             var requestPanel = new RequestPanel
             {
                 Dock = DockStyle.Fill,
-                RequestItem = node.RequestItem,
+                RequestItem = node.Request,
             };
 
             tabPage.Controls.Add(requestPanel);
@@ -174,7 +171,7 @@ namespace Requestr
 
     static class TabControlExtensions
     {
-        public static (RequestTab?, int) FindByKey(this TabControl tabControl, Guid key)
+        public static (RequestTab, int) FindByKey(this TabControl tabControl, Guid key)
         {
             int i = 0;
 
@@ -188,7 +185,7 @@ namespace Requestr
                     continue;
                 }
 
-                if (tab.Key == key)
+                if (tab.Id == key)
                 {
                     return (tab, i - 1);
                 }
