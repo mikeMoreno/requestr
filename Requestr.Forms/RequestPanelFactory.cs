@@ -1,4 +1,5 @@
-﻿using Requestr.Lib.Models;
+﻿using Requestr.Lib;
+using Requestr.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,18 @@ using System.Threading.Tasks;
 
 namespace Requestr.Forms
 {
-    public static class RequestPanelFactory
+    public  class RequestPanelFactory
     {
-        public static RequestPanel Build(Request request)
+        private readonly CookieService cookieService;
+
+        public RequestPanelFactory(CookieService cookieService)
         {
-            var requestPanel = new RequestPanel(Globals.HttpClient, request)
+            this.cookieService = cookieService;
+        }
+
+        public RequestPanel Build(Request request)
+        {
+            var requestPanel = new RequestPanel(request, cookieService)
             {
                 Dock = DockStyle.Fill,
             };

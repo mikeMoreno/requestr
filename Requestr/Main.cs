@@ -10,11 +10,14 @@ namespace Requestr
         private readonly ImportService importService;
         private readonly CollectionService collectionService;
         private readonly RequestService requestService;
+        private readonly RequestPanelFactory requestPanelFactory;
+
 
         public Main(
             ImportService importService,
             CollectionService collectionService,
-            RequestService requestService
+            RequestService requestService,
+            RequestPanelFactory requestPanelFactory
         )
         {
             InitializeComponent();
@@ -24,6 +27,7 @@ namespace Requestr
             this.importService = importService;
             this.collectionService = collectionService;
             this.requestService = requestService;
+            this.requestPanelFactory = requestPanelFactory;
 
             var collections = collectionService.LoadAsync().Result;
 
@@ -65,7 +69,7 @@ namespace Requestr
                 Url = "https://example.com",
             };
 
-            var requestPanel = RequestPanelFactory.Build(request);
+            var requestPanel = requestPanelFactory.Build(request);
 
             tabPage.Controls.Add(requestPanel);
 
@@ -178,7 +182,7 @@ namespace Requestr
 
             tabPage.ContextMenuStrip.Items.Add(itemClose);
 
-            var requestPanel = RequestPanelFactory.Build(node.Request);
+            var requestPanel = requestPanelFactory.Build(node.Request);
 
             tabPage.Controls.Add(requestPanel);
 

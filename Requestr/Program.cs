@@ -1,4 +1,5 @@
 using Requestr.DAL;
+using Requestr.Forms;
 using Requestr.Lib;
 using Requestr.PostmanImporter;
 
@@ -6,14 +7,9 @@ namespace Requestr
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
             SetupApplicationFolder();
@@ -28,7 +24,11 @@ namespace Requestr
 
             var requestService = new RequestService(dbContext);
 
-            Application.Run(new Main(importService, collectionService, requestService));
+            var cookieService = new CookieService(dbContext);
+
+            var requestPanelFactory = new RequestPanelFactory(cookieService);
+
+            Application.Run(new Main(importService, collectionService, requestService, requestPanelFactory));
         }
 
         private static void SetupApplicationFolder()

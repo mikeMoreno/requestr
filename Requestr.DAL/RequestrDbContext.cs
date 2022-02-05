@@ -11,6 +11,8 @@ namespace Requestr.DAL
 
         public DbSet<Request> Requests { get; set; }
 
+        public DbSet<CookieInfo> CookieInfos { get; set; }
+
         public string FullDatabasePath { get; }
 
         public RequestrDbContext()
