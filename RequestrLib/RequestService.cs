@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Requestr.DAL;
+using Requestr.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,14 @@ namespace Requestr.Lib
             var request = await requestrDbContext.Requests.Where(r => r.Id == id).SingleOrDefaultAsync();
 
             requestrDbContext.Requests.Remove(request);
+
+            await requestrDbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Request request)
+        {
+            var dalRequest = await requestrDbContext.Requests.FindAsync(request.Id);
+            dalRequest.Name = request.Name;
 
             await requestrDbContext.SaveChangesAsync();
         }

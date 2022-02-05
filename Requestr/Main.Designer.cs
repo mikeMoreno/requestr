@@ -39,6 +39,7 @@
             this.collectionTreeDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabRequests = new System.Windows.Forms.TabControl();
+            this.collectionTreeRename = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.treeCollectionsContextMenu.SuspendLayout();
             this.tabRequests.SuspendLayout();
@@ -100,9 +101,10 @@
             // treeCollectionsContextMenu
             // 
             this.treeCollectionsContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.collectionTreeDelete});
+            this.collectionTreeDelete,
+            this.collectionTreeRename});
             this.treeCollectionsContextMenu.Name = "treeCollectionsContextMenu";
-            this.treeCollectionsContextMenu.Size = new System.Drawing.Size(181, 48);
+            this.treeCollectionsContextMenu.Size = new System.Drawing.Size(181, 70);
             // 
             // collectionTreeDelete
             // 
@@ -132,6 +134,13 @@
             this.tabRequests.SelectedIndex = 0;
             this.tabRequests.Size = new System.Drawing.Size(757, 434);
             this.tabRequests.TabIndex = 2;
+            // 
+            // collectionTreeRename
+            // 
+            this.collectionTreeRename.Name = "collectionTreeRename";
+            this.collectionTreeRename.Size = new System.Drawing.Size(180, 22);
+            this.collectionTreeRename.Text = "Rename";
+            this.collectionTreeRename.Click += new System.EventHandler(this.CollectionTreeRename_Click);
             // 
             // Main
             // 
@@ -165,5 +174,6 @@
         private ToolStripMenuItem btnNewRequest;
         private ContextMenuStrip treeCollectionsContextMenu;
         private ToolStripMenuItem collectionTreeDelete;
+        private ToolStripMenuItem collectionTreeRename;
     }
 }

@@ -50,5 +50,13 @@ namespace Requestr.Lib
 
             return collections;
         }
+
+        public async Task UpdateAsync(Collection collection)
+        {
+            var dalCollection = await requestrDbContext.RequestCollections.FindAsync(collection.Id);
+            dalCollection.Name = collection.Name;
+
+            await requestrDbContext.SaveChangesAsync();
+        }
     }
 }

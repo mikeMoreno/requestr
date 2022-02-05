@@ -123,6 +123,7 @@ namespace Requestr
             {
                 Id = collection.Id,
                 Text = collection.Name,
+                Collection = collection,
             };
 
             foreach (var request in collection.Requests)
@@ -218,7 +219,7 @@ namespace Requestr
             }
             else if (selected is RequestNode requestNode)
             {
-                var answer = MessageBox.Show($"Really delete Request:skds {requestNode.Text}?", caption: "Confirm", MessageBoxButtons.YesNo);
+                var answer = MessageBox.Show($"Really delete Request: {requestNode.Text}?", caption: "Confirm", MessageBoxButtons.YesNo);
 
                 if (answer == DialogResult.No)
                 {
@@ -228,6 +229,54 @@ namespace Requestr
                 await requestService.DeleteAsync(requestNode.Id);
 
                 treeCollections.Nodes.Remove(requestNode);
+            }
+        }
+
+        private async void CollectionTreeRename_Click(object sender, EventArgs e)
+        {
+            var selected = treeCollections.SelectedNode;
+
+            if (selected is CollectionNode collectionNode)
+            {
+                var inputBox = new InputBox(collectionNode.Text)
+                {
+                    Text = "Rename Collection",
+                };
+
+                var ans = inputBox.ShowDialog();
+
+                if (ans != DialogResult.OK)
+                {
+                    return;
+                }
+
+                var collection = collectionNode.Collection;
+                collection.Name = inputBox.TextEntered;
+
+                await collectionService.UpdateAsync(collection);
+
+                collectionNode.Text = collection.Name;
+            }
+            else if (selected is RequestNode requestNode)
+            {
+                var inputBox = new InputBox(requestNode.Text)
+                {
+                    Text = "Rename Request",
+                };
+
+                var ans = inputBox.ShowDialog();
+
+                if (ans != DialogResult.OK)
+                {
+                    return;
+                }
+
+                var request = requestNode.Request;
+                request.Name = inputBox.TextEntered;
+
+                await requestService.UpdateAsync(request);
+
+                requestNode.Text = request.Name;
             }
         }
     }

@@ -28,10 +28,6 @@ namespace Requestr.DAL
         {
             base.OnModelCreating(builder);
 
-            //builder.Entity<Request>().HasOne(typeof(RequestCollection), "RequestCollection")
-            //    .WithOne("TeamManaging")
-            //    .HasForeignKey(typeof(Team), "ManagerId")
-            //    .HasPrincipalKey(typeof(ApplicationUser), "Id");
             builder.Entity<Request>().HasOne(typeof(RequestCollection), "RequestCollection")
                 .WithMany("Requests")
                 .HasForeignKey("RequestCollectionId");
