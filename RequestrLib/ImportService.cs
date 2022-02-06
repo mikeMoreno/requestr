@@ -44,6 +44,12 @@ namespace Requestr.Lib
                     Name = r.Name,
                     Method = r.Method,
                     Url = r.Url,
+                    RequestHeaders = r.RequestHeaders.Select(h => new DAL.Models.RequestHeader()
+                    {
+                        Key = h.Key,
+                        Value = h.Value,
+                        Type = h.Type,
+                    }).ToList(),
                 }).ToList()
             };
 
@@ -68,6 +74,12 @@ namespace Requestr.Lib
                 {
                     Id = Guid.NewGuid(),
                     RequestCollectionId = collection.Id,
+                    RequestHeaders = requestItem.Request.RequestHeaders.Select(h => new Models.RequestHeader()
+                    {
+                        Key = h.Key,
+                        Value = h.Value,
+                        Type = h.Type,
+                    }).ToList(),
                     Name = requestItem.Name,
                     Method = requestItem.Request.Method,
                     Url = requestItem.Request.Url.Raw,

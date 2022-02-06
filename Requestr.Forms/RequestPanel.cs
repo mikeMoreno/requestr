@@ -139,6 +139,11 @@ namespace Requestr.Forms
 
         private static string FormatResponse(string responseContent)
         {
+            if (string.IsNullOrWhiteSpace(responseContent))
+            {
+                return "";
+            }
+
             try
             {
                 var parser = new HtmlParser();
@@ -245,10 +250,12 @@ namespace Requestr.Forms
             return method switch
             {
                 "GET" => HttpMethod.Get,
-                "POST" => HttpMethod.Post,
-                "DELETE" => HttpMethod.Delete,
-                "PATCH" => HttpMethod.Patch,
                 "PUT" => HttpMethod.Put,
+                "POST" => HttpMethod.Post,
+                "PATCH" => HttpMethod.Patch,
+                "DELETE" => HttpMethod.Delete,
+                "HEAD" => HttpMethod.Head,
+
                 _ => throw new InvalidOperationException($"Unrecognized HttpMethod: {method}"),
             };
         }

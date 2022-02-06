@@ -14,7 +14,7 @@ namespace Requestr.PostmanImporter.Models
 
 
         [JsonPropertyName("header")]
-        public string[] Header { get; set; }
+        public RequestHeader[] RequestHeaders { get; set; }
 
 
         [JsonPropertyName("url")]

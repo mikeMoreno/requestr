@@ -17,5 +17,7 @@ namespace Requestr.Lib.Models
         public string Method { get; set; }
 
         public string Url { get; set; }
+
+        public List<RequestHeader> RequestHeaders { get; set; }
     }
 }

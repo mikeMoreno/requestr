@@ -33,6 +33,10 @@ namespace Requestr.DAL
             builder.Entity<Request>().HasOne(typeof(RequestCollection), "RequestCollection")
                 .WithMany("Requests")
                 .HasForeignKey("RequestCollectionId");
+
+            builder.Entity<RequestHeader>().HasOne(typeof(Request), "Request")
+                .WithMany("RequestHeaders")
+                .HasForeignKey("RequestId");
         }
 
         private static void SetupApplicationFolder()

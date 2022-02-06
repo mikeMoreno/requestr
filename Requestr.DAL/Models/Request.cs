@@ -26,5 +26,7 @@ namespace Requestr.DAL.Models
         public Guid RequestCollectionId { get; set; }
 
         public virtual RequestCollection RequestCollection { get; set; }
+
+        public virtual List<RequestHeader> RequestHeaders { get; set; }
     }
 }
