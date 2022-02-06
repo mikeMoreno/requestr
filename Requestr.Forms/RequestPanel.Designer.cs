@@ -43,6 +43,7 @@
             this.txtHeaders = new System.Windows.Forms.RichTextBox();
             this.requestHeadersMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnFormatRequestHeaders = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnHideDefaultRequestHeaders = new System.Windows.Forms.ToolStripMenuItem();
             this.tabRequestBody = new System.Windows.Forms.TabPage();
             this.txtRequestBody = new System.Windows.Forms.RichTextBox();
             this.requestBodyMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -188,16 +189,24 @@
             // requestHeadersMenu
             // 
             this.requestHeadersMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnFormatRequestHeaders});
+            this.btnFormatRequestHeaders,
+            this.btnHideDefaultRequestHeaders});
             this.requestHeadersMenu.Name = "requestHeadersMenu";
-            this.requestHeadersMenu.Size = new System.Drawing.Size(113, 26);
+            this.requestHeadersMenu.Size = new System.Drawing.Size(191, 48);
             // 
             // btnFormatRequestHeaders
             // 
             this.btnFormatRequestHeaders.Name = "btnFormatRequestHeaders";
-            this.btnFormatRequestHeaders.Size = new System.Drawing.Size(112, 22);
+            this.btnFormatRequestHeaders.Size = new System.Drawing.Size(190, 22);
             this.btnFormatRequestHeaders.Text = "Format";
             this.btnFormatRequestHeaders.Click += new System.EventHandler(this.BtnFormatRequestHeaders_Click);
+            // 
+            // btnHideDefaultRequestHeaders
+            // 
+            this.btnHideDefaultRequestHeaders.Name = "btnHideDefaultRequestHeaders";
+            this.btnHideDefaultRequestHeaders.Size = new System.Drawing.Size(190, 22);
+            this.btnHideDefaultRequestHeaders.Text = "Show Default Headers";
+            this.btnHideDefaultRequestHeaders.Click += new System.EventHandler(this.BtnHideDefaultRequestHeaders_Click);
             // 
             // tabRequestBody
             // 
@@ -280,5 +289,6 @@
         private ToolStripMenuItem btnFormatRequestBody;
         private ContextMenuStrip requestHeadersMenu;
         private ToolStripMenuItem btnFormatRequestHeaders;
+        private ToolStripMenuItem btnHideDefaultRequestHeaders;
     }
 }

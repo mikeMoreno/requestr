@@ -22,7 +22,10 @@ namespace Requestr.Forms
     public partial class RequestPanel : UserControl
     {
         private readonly HttpClient httpClient;
+
         private readonly ICookieService cookieService;
+
+        private bool HideDefaultHeaders { get; set; } = true;
 
         internal RequestPanel(Request request, ICookieService cookieService)
         {
@@ -42,7 +45,7 @@ namespace Requestr.Forms
             comboMethod.SelectedItem = request.Method;
             textUrl.Text = request.Url;
 
-            InitializeDefaultHeaders();
+            DisplayDefaultHeaders();
         }
 
         private async void BtnSend_Click(object sender, EventArgs e)
@@ -80,24 +83,28 @@ namespace Requestr.Forms
             txtResponseBody.Text = FormatResponse(responseContent);
         }
 
-        private void InitializeDefaultHeaders()
+        private void DisplayDefaultHeaders()
         {
-            var headers = new StringBuilder();
-            headers.AppendLine("Cache-Control no-cache");
-            headers.AppendLine($"{Globals.ApplicationName}-Token $GUID");
-            headers.AppendLine($"User-Agent {Globals.ApplicationName}/{Globals.ApplicationVersion}");
-            headers.AppendLine("Accept */*");
-            headers.AppendLine("Accept-Encoding gzip, deflate, br");
-            headers.AppendLine("Connection keep-alive");
+            if (HideDefaultHeaders)
+            {
+                return;
+            }
 
-            txtHeaders.Text = headers.ToString();
+            txtHeaders.Text = BuildDefaultHeaderString().ToString();
         }
 
         private async Task SetupHeadersAsync(HttpClient httpClient, string url)
         {
             httpClient.DefaultRequestHeaders.Clear();
 
+            var headerText = HideDefaultHeaders ? BuildDefaultHeaderString() : new StringBuilder();
+
             foreach (var line in txtHeaders.Text.Split('\n'))
+            {
+                headerText.AppendLine(line);
+            }
+
+            foreach (var line in headerText.ToString().Split('\n'))
             {
                 if (line.Trim().StartsWith("#"))
                 {
@@ -244,6 +251,62 @@ namespace Requestr.Forms
                 "PUT" => HttpMethod.Put,
                 _ => throw new InvalidOperationException($"Unrecognized HttpMethod: {method}"),
             };
+        }
+
+        private void BtnHideDefaultRequestHeaders_Click(object sender, EventArgs e)
+        {
+            HideDefaultHeaders = !HideDefaultHeaders;
+
+            StringBuilder headerText;
+
+            if (HideDefaultHeaders)
+            {
+                btnHideDefaultRequestHeaders.Text = "Show Default Headers";
+
+                headerText = new StringBuilder();
+
+                foreach (var line in txtHeaders.Text.Split('\n'))
+                {
+                    if (!line.StartsWith("Cache-Control") &&
+                        !line.StartsWith($"{Globals.ApplicationName}-Token") &&
+                        !line.StartsWith("User-Agent") &&
+                        !line.StartsWith("Accept") &&
+                        !line.StartsWith("Accept-Encoding") &&
+                        !line.StartsWith("Connection")
+                    )
+                    {
+                        headerText.AppendLine(line);
+                    }
+                }
+            }
+            else
+            {
+                btnHideDefaultRequestHeaders.Text = "Hide Default Headers";
+
+                headerText = BuildDefaultHeaderString();
+
+                foreach (var line in txtHeaders.Text.Split('\n'))
+                {
+                    headerText.AppendLine(line);
+                }
+            }
+
+            var text = headerText.ToString().Trim(new char[] { '\n', '\r' });
+
+            txtHeaders.Text = text;
+        }
+
+        private static StringBuilder BuildDefaultHeaderString()
+        {
+            var headers = new StringBuilder();
+            headers.AppendLine("Cache-Control no-cache");
+            headers.AppendLine($"{Globals.ApplicationName}-Token $GUID");
+            headers.AppendLine($"User-Agent {Globals.ApplicationName}/{Globals.ApplicationVersion}");
+            headers.AppendLine("Accept */*");
+            headers.AppendLine("Accept-Encoding gzip, deflate, br");
+            headers.AppendLine("Connection keep-alive");
+
+            return headers;
         }
     }
 }
