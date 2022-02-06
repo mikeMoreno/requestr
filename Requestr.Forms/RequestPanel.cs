@@ -1,5 +1,7 @@
 ﻿using AngleSharp.Html;
 using AngleSharp.Html.Parser;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Requestr.Lib;
 using Requestr.Lib.Models;
 using Requestr.PostmanImporter;
@@ -47,6 +49,7 @@ namespace Requestr.Forms
         {
             var method = comboMethod.SelectedItem as string;
             var url = textUrl.Text;
+            var body = txtRequestBody.Text;
 
             if (string.IsNullOrWhiteSpace(url))
             {
@@ -59,7 +62,7 @@ namespace Requestr.Forms
 
             stopwatch.Start();
 
-            using var response = await SendRequestAsync(method, url);
+            using var response = await SendRequestAsync(method, url, body);
 
             stopwatch.Stop();
 
@@ -68,15 +71,13 @@ namespace Requestr.Forms
                 await cookieService.SetCookiesAsync(setCookies);
             }
 
-            var responseBodyPanel = tabResponseBody.Controls.OfType<ResponseBodyPanel>().Single(c => c.Name == "responseBodyPanel");
-
             var responseContent = await response.Content.ReadAsStringAsync();
 
             lblStatus.Text = $"Status: {(int)response.StatusCode} {response.StatusCode}";
             lblSize.Text = $"Size: {Encoding.UTF8.GetByteCount(responseContent)}";
             lblTime.Text = $"Time: {stopwatch.ElapsedMilliseconds} ms";
 
-            responseBodyPanel.SetText(FormatResponse(responseContent));
+            txtResponseBody.Text = FormatResponse(responseContent);
         }
 
         private void InitializeDefaultHeaders()
@@ -108,7 +109,7 @@ namespace Requestr.Forms
                     continue;
                 }
 
-                if(!line.Contains(' '))
+                if (!line.Contains(' '))
                 {
                     continue;
                 }
@@ -154,14 +155,25 @@ namespace Requestr.Forms
             }
         }
 
-        private async Task<HttpResponseMessage> SendRequestAsync(string method, string url, int requestsMade = 0)
+        private async Task<HttpResponseMessage> SendRequestAsync(string method, string url, string body = null, int requestsMade = 0)
         {
+            var httpMethod = MethodMapper(method);
+
             if (requestsMade > Globals.MaxRedirects)
             {
                 throw new InvalidOperationException("Max redirects reached.");
             }
 
-            using var request = new HttpRequestMessage(MethodMapper(method), url);
+            using var request = new HttpRequestMessage(httpMethod, url);
+
+            if (!string.IsNullOrWhiteSpace(body))
+            {
+                //var json = JsonSerializer.Serialize(body);
+
+                var content = new StringContent(body, Encoding.UTF8, "application/json");
+
+                request.Content = content;
+            }
 
             var response = await httpClient.SendAsync(request);
 
@@ -171,10 +183,26 @@ namespace Requestr.Forms
 
                 httpClient.DefaultRequestHeaders.Add("Referer", url);
 
-                return await SendRequestAsync(method, movedLocation.AbsoluteUri, requestsMade + 1);
+                return await SendRequestAsync(method, movedLocation.AbsoluteUri, body, requestsMade + 1);
             }
 
             return response;
+        }
+
+        private void BtnFormat_Click(object sender, EventArgs e)
+        {
+            var requestText = txtRequestBody.Text;
+
+            string jsonFormatted = JToken.Parse(requestText).ToString(Formatting.Indented);
+
+            txtRequestBody.Text = jsonFormatted;
+        }
+
+        private void BtnFormatRequestHeaders_Click(object sender, EventArgs e)
+        {
+            var headers = txtHeaders.Text;
+
+            Console.WriteLine(headers);
         }
 
         private static HttpMethod MethodMapper(string method)

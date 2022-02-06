@@ -28,23 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.comboMethod = new System.Windows.Forms.ComboBox();
             this.textUrl = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.tabsResponses = new System.Windows.Forms.TabControl();
             this.tabResponseBody = new System.Windows.Forms.TabPage();
-            this.responseBodyPanel = new Requestr.Forms.ResponseBodyPanel();
+            this.txtResponseBody = new System.Windows.Forms.RichTextBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblSize = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabHeaders = new System.Windows.Forms.TabPage();
-            this.tabRequestBody = new System.Windows.Forms.TabPage();
             this.txtHeaders = new System.Windows.Forms.RichTextBox();
+            this.requestHeadersMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tabRequestBody = new System.Windows.Forms.TabPage();
+            this.txtRequestBody = new System.Windows.Forms.RichTextBox();
+            this.requestBodyMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnFormatRequestBody = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnFormatOld = new System.Windows.Forms.Button();
+            this.btnFormatRequestHeaders = new System.Windows.Forms.ToolStripMenuItem();
             this.tabsResponses.SuspendLayout();
             this.tabResponseBody.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabHeaders.SuspendLayout();
+            this.requestHeadersMenu.SuspendLayout();
+            this.tabRequestBody.SuspendLayout();
+            this.requestBodyMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboMethod
@@ -97,7 +107,7 @@
             // 
             // tabResponseBody
             // 
-            this.tabResponseBody.Controls.Add(this.responseBodyPanel);
+            this.tabResponseBody.Controls.Add(this.txtResponseBody);
             this.tabResponseBody.Location = new System.Drawing.Point(4, 24);
             this.tabResponseBody.Name = "tabResponseBody";
             this.tabResponseBody.Padding = new System.Windows.Forms.Padding(3);
@@ -106,13 +116,14 @@
             this.tabResponseBody.Text = "Response Body";
             this.tabResponseBody.UseVisualStyleBackColor = true;
             // 
-            // responseBodyPanel
+            // txtResponseBody
             // 
-            this.responseBodyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.responseBodyPanel.Location = new System.Drawing.Point(3, 3);
-            this.responseBodyPanel.Name = "responseBodyPanel";
-            this.responseBodyPanel.Size = new System.Drawing.Size(688, 300);
-            this.responseBodyPanel.TabIndex = 0;
+            this.txtResponseBody.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtResponseBody.Location = new System.Drawing.Point(3, 3);
+            this.txtResponseBody.Name = "txtResponseBody";
+            this.txtResponseBody.Size = new System.Drawing.Size(688, 300);
+            this.txtResponseBody.TabIndex = 0;
+            this.txtResponseBody.Text = "";
             // 
             // lblStatus
             // 
@@ -126,7 +137,7 @@
             // lblSize
             // 
             this.lblSize.AutoSize = true;
-            this.lblSize.Location = new System.Drawing.Point(111, 235);
+            this.lblSize.Location = new System.Drawing.Point(147, 235);
             this.lblSize.Name = "lblSize";
             this.lblSize.Size = new System.Drawing.Size(30, 15);
             this.lblSize.TabIndex = 5;
@@ -135,7 +146,7 @@
             // lblTime
             // 
             this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(196, 235);
+            this.lblTime.Location = new System.Drawing.Point(283, 235);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(36, 15);
             this.lblTime.TabIndex = 6;
@@ -164,8 +175,27 @@
             this.tabHeaders.Text = "Headers";
             this.tabHeaders.UseVisualStyleBackColor = true;
             // 
+            // txtHeaders
+            // 
+            this.txtHeaders.ContextMenuStrip = this.requestHeadersMenu;
+            this.txtHeaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtHeaders.Location = new System.Drawing.Point(3, 3);
+            this.txtHeaders.Name = "txtHeaders";
+            this.txtHeaders.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.txtHeaders.Size = new System.Drawing.Size(680, 126);
+            this.txtHeaders.TabIndex = 0;
+            this.txtHeaders.Text = "";
+            // 
+            // requestHeadersMenu
+            // 
+            this.requestHeadersMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnFormatRequestHeaders});
+            this.requestHeadersMenu.Name = "requestHeadersMenu";
+            this.requestHeadersMenu.Size = new System.Drawing.Size(181, 48);
+            // 
             // tabRequestBody
             // 
+            this.tabRequestBody.Controls.Add(this.txtRequestBody);
             this.tabRequestBody.Location = new System.Drawing.Point(4, 24);
             this.tabRequestBody.Name = "tabRequestBody";
             this.tabRequestBody.Padding = new System.Windows.Forms.Padding(3);
@@ -174,17 +204,50 @@
             this.tabRequestBody.Text = "Request Body";
             this.tabRequestBody.UseVisualStyleBackColor = true;
             // 
-            // txtHeaders
+            // txtRequestBody
             // 
-            this.txtHeaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtHeaders.Location = new System.Drawing.Point(3, 3);
-            this.txtHeaders.Name = "txtHeaders";
-            this.txtHeaders.Size = new System.Drawing.Size(680, 126);
-            this.txtHeaders.TabIndex = 0;
-            this.txtHeaders.Text = "";
+            this.txtRequestBody.ContextMenuStrip = this.requestBodyMenu;
+            this.txtRequestBody.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtRequestBody.Location = new System.Drawing.Point(3, 3);
+            this.txtRequestBody.Name = "txtRequestBody";
+            this.txtRequestBody.Size = new System.Drawing.Size(680, 126);
+            this.txtRequestBody.TabIndex = 0;
+            this.txtRequestBody.Text = "";
+            // 
+            // requestBodyMenu
+            // 
+            this.requestBodyMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnFormatRequestBody});
+            this.requestBodyMenu.Name = "requestBodyMenu";
+            this.requestBodyMenu.Size = new System.Drawing.Size(113, 26);
+            // 
+            // btnFormatRequestBody
+            // 
+            this.btnFormatRequestBody.Name = "btnFormatRequestBody";
+            this.btnFormatRequestBody.Size = new System.Drawing.Size(112, 22);
+            this.btnFormatRequestBody.Text = "Format";
+            this.btnFormatRequestBody.Click += new System.EventHandler(this.BtnFormat_Click);
+            // 
+            // btnFormatOld
+            // 
+            this.btnFormatOld.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormatOld.Location = new System.Drawing.Point(163, 68);
+            this.btnFormatOld.Name = "btnFormatOld";
+            this.btnFormatOld.Size = new System.Drawing.Size(75, 23);
+            this.btnFormatOld.TabIndex = 8;
+            this.btnFormatOld.Text = "Format";
+            this.btnFormatOld.UseVisualStyleBackColor = true;
+            // 
+            // btnFormatRequestHeaders
+            // 
+            this.btnFormatRequestHeaders.Name = "btnFormatRequestHeaders";
+            this.btnFormatRequestHeaders.Size = new System.Drawing.Size(180, 22);
+            this.btnFormatRequestHeaders.Text = "Format";
+            this.btnFormatRequestHeaders.Click += new System.EventHandler(this.BtnFormatRequestHeaders_Click);
             // 
             // RequestPanel
             // 
+            this.Controls.Add(this.btnFormatOld);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblSize);
@@ -200,6 +263,9 @@
             this.tabResponseBody.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabHeaders.ResumeLayout(false);
+            this.requestHeadersMenu.ResumeLayout(false);
+            this.tabRequestBody.ResumeLayout(false);
+            this.requestBodyMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -213,7 +279,6 @@
         private Button btnSend;
         private TabControl tabsResponses;
         private TabPage tabResponseBody;
-        private ResponseBodyPanel responseBodyPanel;
         private Label lblStatus;
         private Label lblSize;
         private Label lblTime;
@@ -221,5 +286,12 @@
         private TabPage tabHeaders;
         private TabPage tabRequestBody;
         private RichTextBox txtHeaders;
+        private RichTextBox txtRequestBody;
+        private RichTextBox txtResponseBody;
+        private ContextMenuStrip requestBodyMenu;
+        private Button btnFormatOld;
+        private ToolStripMenuItem btnFormatRequestBody;
+        private ContextMenuStrip requestHeadersMenu;
+        private ToolStripMenuItem btnFormatRequestHeaders;
     }
 }
