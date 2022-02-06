@@ -42,12 +42,11 @@
             this.tabHeaders = new System.Windows.Forms.TabPage();
             this.txtHeaders = new System.Windows.Forms.RichTextBox();
             this.requestHeadersMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnFormatRequestHeaders = new System.Windows.Forms.ToolStripMenuItem();
             this.tabRequestBody = new System.Windows.Forms.TabPage();
             this.txtRequestBody = new System.Windows.Forms.RichTextBox();
             this.requestBodyMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnFormatRequestBody = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnFormatOld = new System.Windows.Forms.Button();
-            this.btnFormatRequestHeaders = new System.Windows.Forms.ToolStripMenuItem();
             this.tabsResponses.SuspendLayout();
             this.tabResponseBody.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -191,7 +190,14 @@
             this.requestHeadersMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnFormatRequestHeaders});
             this.requestHeadersMenu.Name = "requestHeadersMenu";
-            this.requestHeadersMenu.Size = new System.Drawing.Size(181, 48);
+            this.requestHeadersMenu.Size = new System.Drawing.Size(113, 26);
+            // 
+            // btnFormatRequestHeaders
+            // 
+            this.btnFormatRequestHeaders.Name = "btnFormatRequestHeaders";
+            this.btnFormatRequestHeaders.Size = new System.Drawing.Size(112, 22);
+            this.btnFormatRequestHeaders.Text = "Format";
+            this.btnFormatRequestHeaders.Click += new System.EventHandler(this.BtnFormatRequestHeaders_Click);
             // 
             // tabRequestBody
             // 
@@ -228,26 +234,8 @@
             this.btnFormatRequestBody.Text = "Format";
             this.btnFormatRequestBody.Click += new System.EventHandler(this.BtnFormat_Click);
             // 
-            // btnFormatOld
-            // 
-            this.btnFormatOld.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFormatOld.Location = new System.Drawing.Point(163, 68);
-            this.btnFormatOld.Name = "btnFormatOld";
-            this.btnFormatOld.Size = new System.Drawing.Size(75, 23);
-            this.btnFormatOld.TabIndex = 8;
-            this.btnFormatOld.Text = "Format";
-            this.btnFormatOld.UseVisualStyleBackColor = true;
-            // 
-            // btnFormatRequestHeaders
-            // 
-            this.btnFormatRequestHeaders.Name = "btnFormatRequestHeaders";
-            this.btnFormatRequestHeaders.Size = new System.Drawing.Size(180, 22);
-            this.btnFormatRequestHeaders.Text = "Format";
-            this.btnFormatRequestHeaders.Click += new System.EventHandler(this.BtnFormatRequestHeaders_Click);
-            // 
             // RequestPanel
             // 
-            this.Controls.Add(this.btnFormatOld);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblSize);
@@ -289,7 +277,6 @@
         private RichTextBox txtRequestBody;
         private RichTextBox txtResponseBody;
         private ContextMenuStrip requestBodyMenu;
-        private Button btnFormatOld;
         private ToolStripMenuItem btnFormatRequestBody;
         private ContextMenuStrip requestHeadersMenu;
         private ToolStripMenuItem btnFormatRequestHeaders;

@@ -168,8 +168,6 @@ namespace Requestr.Forms
 
             if (!string.IsNullOrWhiteSpace(body))
             {
-                //var json = JsonSerializer.Serialize(body);
-
                 var content = new StringContent(body, Encoding.UTF8, "application/json");
 
                 request.Content = content;
@@ -200,9 +198,39 @@ namespace Requestr.Forms
 
         private void BtnFormatRequestHeaders_Click(object sender, EventArgs e)
         {
-            var headers = txtHeaders.Text;
+            var headerText = txtHeaders.Text;
 
-            Console.WriteLine(headers);
+            var lines = headerText.Split('\n').Where(line => !string.IsNullOrWhiteSpace(line));
+
+            var formattedLines = new List<string>();
+
+            int charCount = 0;
+            int lineNumber = 0;
+            foreach (var line in lines)
+            {
+                if (!line.Contains(' '))
+                {
+                    txtHeaders.Select(charCount + lineNumber, line.Length);
+                    return;
+                }
+
+                var key = line[..line.IndexOf(' ')].Trim();
+                var value = line[(line.IndexOf(' ') + 1)..].Trim();
+
+                formattedLines.Add($"{key} {value}");
+
+                charCount += line.Length;
+                lineNumber++;
+            }
+
+            var uniqueHeaders = formattedLines.Select(line => line.Trim()).DistinctBy(line => line);
+
+            txtHeaders.Text = "";
+
+            foreach (var header in uniqueHeaders)
+            {
+                txtHeaders.Text += header + "\n";
+            }
         }
 
         private static HttpMethod MethodMapper(string method)
