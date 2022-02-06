@@ -39,6 +39,8 @@ namespace Requestr.Forms
 
             comboMethod.SelectedItem = request.Method;
             textUrl.Text = request.Url;
+
+            InitializeDefaultHeaders();
         }
 
         private async void BtnSend_Click(object sender, EventArgs e)
@@ -51,20 +53,7 @@ namespace Requestr.Forms
                 return;
             }
 
-            httpClient.DefaultRequestHeaders.Clear();
-            httpClient.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
-            httpClient.DefaultRequestHeaders.Add($"{Globals.ApplicationName}-Token", Guid.NewGuid().ToString());
-            httpClient.DefaultRequestHeaders.Add("User-Agent", $"{Globals.ApplicationName}/{Globals.ApplicationVersion}");
-            httpClient.DefaultRequestHeaders.Add("Accept", "*/*");
-            httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
-            httpClient.DefaultRequestHeaders.Add("Connection", "keep-alive");
-
-            var cookies = await cookieService.GetCookiesAsync(url);
-
-            if (cookies.Length > 0)
-            {
-                httpClient.DefaultRequestHeaders.Add("Cookie", cookies);
-            }
+            await SetupHeadersAsync(httpClient, url);
 
             var stopwatch = new Stopwatch();
 
@@ -79,7 +68,7 @@ namespace Requestr.Forms
                 await cookieService.SetCookiesAsync(setCookies);
             }
 
-            var responseBodyPanel = tabBody.Controls.OfType<ResponseBodyPanel>().Single(c => c.Name == "responseBodyPanel");
+            var responseBodyPanel = tabResponseBody.Controls.OfType<ResponseBodyPanel>().Single(c => c.Name == "responseBodyPanel");
 
             var responseContent = await response.Content.ReadAsStringAsync();
 
@@ -88,6 +77,56 @@ namespace Requestr.Forms
             lblTime.Text = $"Time: {stopwatch.ElapsedMilliseconds} ms";
 
             responseBodyPanel.SetText(FormatResponse(responseContent));
+        }
+
+        private void InitializeDefaultHeaders()
+        {
+            var headers = new StringBuilder();
+            headers.AppendLine("Cache-Control no-cache");
+            headers.AppendLine($"{Globals.ApplicationName}-Token $GUID");
+            headers.AppendLine($"User-Agent {Globals.ApplicationName}/{Globals.ApplicationVersion}");
+            headers.AppendLine("Accept */*");
+            headers.AppendLine("Accept-Encoding gzip, deflate, br");
+            headers.AppendLine("Connection keep-alive");
+
+            txtHeaders.Text = headers.ToString();
+        }
+
+        private async Task SetupHeadersAsync(HttpClient httpClient, string url)
+        {
+            httpClient.DefaultRequestHeaders.Clear();
+
+            foreach (var line in txtHeaders.Text.Split('\n'))
+            {
+                if (line.Trim().StartsWith("#"))
+                {
+                    continue;
+                }
+
+                if (line.Trim() == "")
+                {
+                    continue;
+                }
+
+                if(!line.Contains(' '))
+                {
+                    continue;
+                }
+
+                var key = line[..line.IndexOf(' ')].Trim();
+                var value = line[(line.IndexOf(' ') + 1)..].Trim();
+
+                value = value.Replace("$GUID", Guid.NewGuid().ToString());
+
+                httpClient.DefaultRequestHeaders.Add(key, value);
+            }
+
+            var cookies = await cookieService.GetCookiesAsync(url);
+
+            if (cookies.Length > 0)
+            {
+                httpClient.DefaultRequestHeaders.Add("Cookie", cookies);
+            }
         }
 
         private static string FormatResponse(string responseContent)

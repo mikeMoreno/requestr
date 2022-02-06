@@ -32,13 +32,19 @@
             this.textUrl = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.tabsResponses = new System.Windows.Forms.TabControl();
-            this.tabBody = new System.Windows.Forms.TabPage();
+            this.tabResponseBody = new System.Windows.Forms.TabPage();
             this.responseBodyPanel = new Requestr.Forms.ResponseBodyPanel();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblSize = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabHeaders = new System.Windows.Forms.TabPage();
+            this.tabRequestBody = new System.Windows.Forms.TabPage();
+            this.txtHeaders = new System.Windows.Forms.RichTextBox();
             this.tabsResponses.SuspendLayout();
-            this.tabBody.SuspendLayout();
+            this.tabResponseBody.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabHeaders.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboMethod
@@ -82,23 +88,23 @@
             this.tabsResponses.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabsResponses.Controls.Add(this.tabBody);
+            this.tabsResponses.Controls.Add(this.tabResponseBody);
             this.tabsResponses.Location = new System.Drawing.Point(3, 253);
             this.tabsResponses.Name = "tabsResponses";
             this.tabsResponses.SelectedIndex = 0;
             this.tabsResponses.Size = new System.Drawing.Size(702, 334);
             this.tabsResponses.TabIndex = 3;
             // 
-            // tabBody
+            // tabResponseBody
             // 
-            this.tabBody.Controls.Add(this.responseBodyPanel);
-            this.tabBody.Location = new System.Drawing.Point(4, 24);
-            this.tabBody.Name = "tabBody";
-            this.tabBody.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBody.Size = new System.Drawing.Size(694, 306);
-            this.tabBody.TabIndex = 0;
-            this.tabBody.Text = "Body";
-            this.tabBody.UseVisualStyleBackColor = true;
+            this.tabResponseBody.Controls.Add(this.responseBodyPanel);
+            this.tabResponseBody.Location = new System.Drawing.Point(4, 24);
+            this.tabResponseBody.Name = "tabResponseBody";
+            this.tabResponseBody.Padding = new System.Windows.Forms.Padding(3);
+            this.tabResponseBody.Size = new System.Drawing.Size(694, 306);
+            this.tabResponseBody.TabIndex = 0;
+            this.tabResponseBody.Text = "Response Body";
+            this.tabResponseBody.UseVisualStyleBackColor = true;
             // 
             // responseBodyPanel
             // 
@@ -135,8 +141,51 @@
             this.lblTime.TabIndex = 6;
             this.lblTime.Text = "Time:";
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabHeaders);
+            this.tabControl1.Controls.Add(this.tabRequestBody);
+            this.tabControl1.Location = new System.Drawing.Point(7, 72);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(694, 160);
+            this.tabControl1.TabIndex = 7;
+            // 
+            // tabHeaders
+            // 
+            this.tabHeaders.Controls.Add(this.txtHeaders);
+            this.tabHeaders.Location = new System.Drawing.Point(4, 24);
+            this.tabHeaders.Name = "tabHeaders";
+            this.tabHeaders.Padding = new System.Windows.Forms.Padding(3);
+            this.tabHeaders.Size = new System.Drawing.Size(686, 132);
+            this.tabHeaders.TabIndex = 0;
+            this.tabHeaders.Text = "Headers";
+            this.tabHeaders.UseVisualStyleBackColor = true;
+            // 
+            // tabRequestBody
+            // 
+            this.tabRequestBody.Location = new System.Drawing.Point(4, 24);
+            this.tabRequestBody.Name = "tabRequestBody";
+            this.tabRequestBody.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRequestBody.Size = new System.Drawing.Size(686, 132);
+            this.tabRequestBody.TabIndex = 1;
+            this.tabRequestBody.Text = "Request Body";
+            this.tabRequestBody.UseVisualStyleBackColor = true;
+            // 
+            // txtHeaders
+            // 
+            this.txtHeaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtHeaders.Location = new System.Drawing.Point(3, 3);
+            this.txtHeaders.Name = "txtHeaders";
+            this.txtHeaders.Size = new System.Drawing.Size(680, 126);
+            this.txtHeaders.TabIndex = 0;
+            this.txtHeaders.Text = "";
+            // 
             // RequestPanel
             // 
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblSize);
             this.Controls.Add(this.lblStatus);
@@ -148,7 +197,9 @@
             this.Name = "RequestPanel";
             this.Size = new System.Drawing.Size(708, 590);
             this.tabsResponses.ResumeLayout(false);
-            this.tabBody.ResumeLayout(false);
+            this.tabResponseBody.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabHeaders.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,10 +212,14 @@
 
         private Button btnSend;
         private TabControl tabsResponses;
-        private TabPage tabBody;
+        private TabPage tabResponseBody;
         private ResponseBodyPanel responseBodyPanel;
         private Label lblStatus;
         private Label lblSize;
         private Label lblTime;
+        private TabControl tabControl1;
+        private TabPage tabHeaders;
+        private TabPage tabRequestBody;
+        private RichTextBox txtHeaders;
     }
 }
