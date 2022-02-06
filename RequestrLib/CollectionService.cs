@@ -66,6 +66,12 @@ namespace Requestr.Lib
                     Name = r.Name,
                     Method = r.Method,
                     Url = r.Url,
+                    RequestHeaders = r.RequestHeaders.Select(h => new RequestHeader()
+                    {
+                        Key = h.Key,
+                        Value = h.Value,
+                        Type = h.Type,
+                    }).ToList(),
                 }).ToList()
 
             };
@@ -77,6 +83,7 @@ namespace Requestr.Lib
         {
             var collection = await requestrDbContext.RequestCollections
                 .Include(c => c.Requests)
+                .ThenInclude(r => r.RequestHeaders)
                 .Where(c => c.Id == id).SingleOrDefaultAsync();
 
             requestrDbContext.RequestCollections.Remove(collection);
@@ -88,6 +95,7 @@ namespace Requestr.Lib
         {
             var dalCollections = await requestrDbContext.RequestCollections
                 .Include(c => c.Requests)
+                .ThenInclude(r => r.RequestHeaders)
                 .ToListAsync();
 
             var collections = dalCollections.Select(dalCollection => new Collection()
@@ -101,6 +109,12 @@ namespace Requestr.Lib
                     Name = r.Name,
                     Method = r.Method,
                     Url = r.Url,
+                    RequestHeaders = r.RequestHeaders.Select(h => new RequestHeader()
+                    {
+                        Key = h.Key,
+                        Value = h.Value,
+                        Type = h.Type,
+                    }).ToList(),
                 }).ToList()
             }).ToList();
 

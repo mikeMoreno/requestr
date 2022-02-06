@@ -45,7 +45,7 @@ namespace Requestr.Forms
             comboMethod.SelectedItem = request.Method;
             textUrl.Text = request.Url;
 
-            DisplayDefaultHeaders();
+            DisplayHeadersOnLoad(request);
         }
 
         private async void BtnSend_Click(object sender, EventArgs e)
@@ -59,7 +59,7 @@ namespace Requestr.Forms
                 return;
             }
 
-            await SetupHeadersAsync(httpClient, url);
+            await PrepareHeadersBeforeRequestAsync(httpClient, url);
 
             var stopwatch = new Stopwatch();
 
@@ -83,17 +83,19 @@ namespace Requestr.Forms
             txtResponseBody.Text = FormatResponse(responseContent);
         }
 
-        private void DisplayDefaultHeaders()
+        private void DisplayHeadersOnLoad(Request request)
         {
-            if (HideDefaultHeaders)
+            var headerText = !HideDefaultHeaders ? BuildDefaultHeaderString() : new StringBuilder();
+
+            foreach (var header in request.RequestHeaders)
             {
-                return;
+                headerText.Append($"{header.Key} {header.Value}");
             }
 
-            txtHeaders.Text = BuildDefaultHeaderString().ToString();
+            txtHeaders.Text = headerText.ToString();
         }
 
-        private async Task SetupHeadersAsync(HttpClient httpClient, string url)
+        private async Task PrepareHeadersBeforeRequestAsync(HttpClient httpClient, string url)
         {
             httpClient.DefaultRequestHeaders.Clear();
 
