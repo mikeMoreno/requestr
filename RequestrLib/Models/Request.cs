@@ -18,6 +18,6 @@ namespace Requestr.Lib.Models
 
         public string Url { get; set; }
 
-        public List<RequestHeader> RequestHeaders { get; set; }
+        public List<RequestHeader> RequestHeaders { get; set; } = new List<RequestHeader>();
     }
 }
